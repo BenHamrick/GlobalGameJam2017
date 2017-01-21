@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     public Transform playerModel;
 
     public GameObject onPlatform;
+	public bool isDead;
     public bool isOnGround = true;
     float ghostJumpTimer = 0f;
     float currentMaxVelocity = 0f;
@@ -39,9 +40,17 @@ public class PlayerController : MonoBehaviour {
             playerModel.localScale = new Vector3(-playerModel.localScale.x, playerModel.localScale.y, playerModel.localScale.z);
         }
     }
-	
+
 	// Update is called once per frame
 	void Update () {
+		if(health <= 0)
+		{
+			isDead = true;
+			inputcontroller.enabled = false;
+			GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
+			enabled = false;
+		}
+
         CheckGound();
         animator.SetBool("OnGround", isOnGround);
     }
