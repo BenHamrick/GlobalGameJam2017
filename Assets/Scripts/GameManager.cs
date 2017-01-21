@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Team
+{
+    red,
+    blue
+}
+
 public class GameManager : MonoBehaviour {
 
 	// Use this for initialization

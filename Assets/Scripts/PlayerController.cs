@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public Team team;
+
     public float ghostJumpTime = 1f;
     public float movementForce = 50f;
     public float maxVelocity = 10f;
