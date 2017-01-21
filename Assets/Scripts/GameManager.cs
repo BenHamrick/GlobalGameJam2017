@@ -19,6 +19,8 @@ public enum GameState
 }
 
 public class GameManager : MonoBehaviour {
+    public static GameManager instance;
+
     public GameState gameState;
     public GameObject playerPrefab;
     public Transform[] positions;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
+        instance = this;
         players = new List<PlayerController>();
     }
 
@@ -115,5 +118,10 @@ public class GameManager : MonoBehaviour {
         playerController.inputcontroller.playerActions = PlayerActions.CreateWithDebugBindings();
         playerController.inputcontroller.playerActions.Device = device;
         players.Add(playerController);
+    }
+
+    public void Score(Team team)
+    {
+
     }
 }
