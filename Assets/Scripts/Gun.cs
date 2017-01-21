@@ -13,14 +13,15 @@ public class Gun : MonoBehaviour
 		public Wave.WaveType wType;// holds what kind of wave the ammo is
 		public int maxAmmoCount;// holds the maximum amount of ammo you can have for this wave
 		public int currentAmmoCount;// holds how much ammo is currently left of this wave
-		private bool isOnCoolDown;// Holds whether this ammo is on cooldoon or not
+		public bool alreadyRefilling;
+		private bool isOutOfAmmo;// Holds whether there is any ammo left or not
 		#endregion
 
 		#region Proporties
-		public bool IsOnCoolDown
+		public bool IsOutOfAmmo
 		{
 			get{
-				return isOnCoolDown;
+				return isOutOfAmmo;
 			}
 		}
 
@@ -32,9 +33,13 @@ public class Gun : MonoBehaviour
 			set{
 				// Go on cooldown if the ammo count reachs or goes below 0
 				currentAmmoCount = value;
-				isOnCoolDown = (currentAmmoCount <= 0) ? true : false;
-				if(isOnCoolDown){
+				isOutOfAmmo = (currentAmmoCount <= 0) ? true : false;
+				if(isOutOfAmmo){
 					currentAmmoCount = 0;
+				}
+				else if(currentAmmoCount > maxAmmoCount){
+					currentAmmoCount = maxAmmoCount;
+					alreadyRefilling = false;
 				}
 			}
 		}
@@ -46,7 +51,7 @@ public class Gun : MonoBehaviour
 		/// <param name="gun">Gun.</param>
 		public void SpawnWave(Gun gun, Team team)
 		{
-			if(!isOnCoolDown)// Make sure we aren't on cooldown
+			if(!isOutOfAmmo)// Make sure we aren't on cooldown
 			{
 				CurrentAmmoCount--;
 				Vector3 positionAdjuster = (team == Team.blue) ? gun.waveSpawnPostionAdjuster : gun.waveSpawnPostionAdjuster * -1;
@@ -60,7 +65,7 @@ public class Gun : MonoBehaviour
 		/// </summary>
 		public void RefillAmmo()
 		{
-			CurrentAmmoCount = maxAmmoCount;
+			CurrentAmmoCount++;
 		}
 	}
 		
@@ -68,7 +73,7 @@ public class Gun : MonoBehaviour
 	public WaveAmmo currentWave;// Holds the current wave teh gun can shot
 	public bool isFiring;// holds whether the player is trying to fire the gun or not
 	public float fireRate;// Holds how fast the gun can shot waves
-	public float coolDownTime;// holds the amount of time that each wave ammo can be on cooldown for
+	public float ammoRefillRate;
 	public Vector3 waveSpawnPostionAdjuster;
 	private Team team;
 	#endregion
@@ -114,22 +119,27 @@ public class Gun : MonoBehaviour
 	IEnumerator FireWave(WaveAmmo wAmmo)
 	{
 		isFiring = true;
-		while(!wAmmo.IsOnCoolDown && isFiring)
+		while(!wAmmo.IsOutOfAmmo && isFiring)
 		{
 			wAmmo.SpawnWave(this, team);
-			if(wAmmo.IsOnCoolDown){
-				StartCoroutine(CoolDown(wAmmo));
+			if(wAmmo.CurrentAmmoCount != wAmmo.maxAmmoCount && !wAmmo.alreadyRefilling){
+				StartCoroutine(RefillingAmmo(wAmmo));
 			}
 			yield return new WaitForSeconds(fireRate);
 		}
+		isFiring = false;
 	}
 	#endregion
 
-	#region CoolDown
-	IEnumerator CoolDown(WaveAmmo wAmmo)
+	#region Refilling 
+	IEnumerator RefillingAmmo(WaveAmmo wAmmo)
 	{
-		yield return new WaitForSeconds(coolDownTime);
-		wAmmo.RefillAmmo();
+		wAmmo.alreadyRefilling = true;
+		while(wAmmo.CurrentAmmoCount != wAmmo.maxAmmoCount)
+		{
+			yield return new WaitForSeconds(ammoRefillRate);
+			wAmmo.RefillAmmo();
+		}
 	}
 	#endregion
 }
