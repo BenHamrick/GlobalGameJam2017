@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour 
 {
+	#region Attributes
+	[System.Serializable]
 	public class WaveAmmo
 	{
 		#region Attributes
@@ -29,14 +31,10 @@ public class Gun : MonoBehaviour
 			}
 			set{
 				// Go on cooldown if the ammo count reachs or goes below 0
-				if(value <= 0)
-				{
-					isOnCoolDown = true;
-				}
-				else
-				{
-					isOnCoolDown = false;
-					currentAmmoCount = value;
+				currentAmmoCount = value;
+				isOnCoolDown = (currentAmmoCount <= 0) ? true : false;
+				if(isOnCoolDown){
+					currentAmmoCount = 0;
 				}
 			}
 		}
@@ -46,12 +44,12 @@ public class Gun : MonoBehaviour
 		/// Should instantiate the wave infront of the gun
 		/// </summary>
 		/// <param name="gun">Gun.</param>
-		public void FireWave(GameObject gun)
+		public void SpawnWave(GameObject gun)
 		{
 			if(!isOnCoolDown)// Make sure we aren't on cooldown
 			{
-				currentAmmoCount--;
-				GameObject.Instantiate(wave, gun.transform.forward, Quaternion.identity);
+				CurrentAmmoCount--;
+				GameObject.Instantiate(wave, gun.transform.position + gun.transform.forward, Quaternion.identity);
 			}
 		}
 
@@ -64,37 +62,38 @@ public class Gun : MonoBehaviour
 		}
 	}
 
-	#region Attributes
+	private PlayerActions pActions;
 	public WaveAmmo[] waves;// Should hold all the types of waves the gun can shot
 	public WaveAmmo currentWave;// Holds the current wave teh gun can shot
+	public bool isFiring;// holds whether the player is trying to fire the gun or not
 	public float fireRate;// Holds how fast the gun can shot waves
 	public float coolDownTime;// holds the amount of time that each wave ammo can be on cooldown for
 	#endregion
 
-	/// <summary>
-	/// Changes the current wave the gun can shot
-	/// </summary>
-	#region Change Wave Type
-	public void ChangeWaveTypeToWave1()
+	#region FireWave
+	public void FireoWave1()
 	{
 		currentWave = waves[0];
+		StartWave();
 	}
 
-	public void ChangeWaveTypeToWave2()
+	public void FireWave2()
 	{
 		currentWave = waves[1];
+		StartWave();
 	}
 
-	public void ChangeWaveTypeToWave3()
+	public void FireWave3()
 	{
 		currentWave = waves[2];
+		StartWave();
 	}
-	#endregion
 
-	#region Fire Wave
 	void StartWave()
 	{
-		StartCoroutine(SpawnWave(currentWave));
+		if(!isFiring){
+			StartCoroutine(FireWave(currentWave));
+		}
 	}
 
 	void EndWave()
@@ -102,24 +101,25 @@ public class Gun : MonoBehaviour
 		StopCoroutine("SpawnWave");
 	}
 
-	IEnumerator CooolDown(WaveAmmo wAmmo)
+	IEnumerator FireWave(WaveAmmo wAmmo)
 	{
-		yield return new WaitForSeconds(coolDownTime);
-		wAmmo.RefillAmmo();
-	}
-
-	IEnumerator SpawnWave(WaveAmmo wAmmo)
-	{
-		while(!wAmmo.IsOnCoolDown)
+		isFiring = true;
+		while(!wAmmo.IsOnCoolDown && isFiring)
 		{
-			wAmmo.FireWave(gameObject);
+			wAmmo.SpawnWave(gameObject);
+			if(wAmmo.IsOnCoolDown){
+				StartCoroutine(CoolDown(wAmmo));
+			}
 			yield return new WaitForSeconds(fireRate);
 		}
 	}
 	#endregion
-		
-	// Update is called once per frame
-	void Update () {
-		
+
+	#region CoolDown
+	IEnumerator CoolDown(WaveAmmo wAmmo)
+	{
+		yield return new WaitForSeconds(coolDownTime);
+		wAmmo.RefillAmmo();
 	}
+	#endregion
 }

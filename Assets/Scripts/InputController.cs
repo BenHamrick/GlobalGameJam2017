@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputController : MonoBehaviour {
 
     public PlayerActions playerActions;
-
+	public Gun playerGun;
     PlayerController playerController;
 
     // Use this for initialization
@@ -37,5 +37,18 @@ public class InputController : MonoBehaviour {
                 playerController.Jump();
             }
         }
+
+		if(playerActions.Wave1.IsPressed){
+			playerGun.FireoWave1();
+		}
+		else if(playerActions.Wave2.IsPressed){
+			playerGun.FireWave2();
+		}
+		else if(playerActions.Wave3.IsPressed){
+			playerGun.FireWave3();
+		}
+		else{
+			playerGun.isFiring = false;
+		}
     }
 }
