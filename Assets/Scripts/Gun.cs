@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour 
 {
@@ -24,7 +25,8 @@ public class Gun : MonoBehaviour
 			w.GetComponent<Wave>().SetTeam(team);
 		}
 	}
-		
+
+    public Slider coolDown;
 	public WaveAmmo[] waves;// Should hold all the types of waves the gun can shot
 	public WaveAmmo currentWave;// Holds the current wave teh gun can shot
 	public bool isFiring;// holds whether the player is trying to fire the gun or not
@@ -81,13 +83,18 @@ public class Gun : MonoBehaviour
 		}
 	}
 
+    void Update()
+    {
+        coolDown.value = (float)currentAmmoCount / (float)maxAmmoCount;
+    }
+
 	IEnumerator FireWave(WaveAmmo wAmmo)
 	{
 		isFiring = true;
         if (!IsOutOfAmmo) {
             wAmmo.SpawnWave(this, team);
             currentAmmoCount--;
-            if (currentAmmoCount != maxAmmoCount && !alreadyRefilling) {
+			if (currentAmmoCount != maxAmmoCount && !alreadyRefilling) {
                 StartCoroutine(RefillingAmmo());
             }
 
@@ -107,7 +114,7 @@ public class Gun : MonoBehaviour
 			RefillAmmo();
 		}
 		alreadyRefilling = false;
-	}
+    }
 
     /// <summary>
     /// Should refill the ammo count to max

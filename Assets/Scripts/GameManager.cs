@@ -39,8 +39,13 @@ public class GameManager : MonoBehaviour {
 
     float startingTime = 0f;
 
+    public List<MusicTextSync> textSync;
+    public List<MusicHueSync> hueSync;
+
     void Awake()
     {
+        textSync = new List<MusicTextSync>();
+        hueSync = new List<MusicHueSync>();
         pressStart.SetActive(true);
         instance = this;
         score = winningScore / 2f;
@@ -51,9 +56,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
-
+        for (int i = 0; i < textSync.Count; i++) {
+            textSync[i].RandomColor();
+        }
+        for (int i = 0; i < hueSync.Count; i++) {
+            hueSync[i].Randomize();
+        }
         Debug.Log(eventInfo.messageInfo);
-        Camera.main.backgroundColor = Random.ColorHSV();
     }
 
 
@@ -167,4 +176,25 @@ public class GameManager : MonoBehaviour {
             winning.SetActive(true);
         }
     }
+
+	public IEnumerator Respawn(PlayerController player)
+	{
+		yield return new WaitForSeconds(5f);
+		bool positionFound = false;
+		while(!positionFound)
+		{
+			int positionIndex = Random.Range(0, positions.Length - 1);
+			if(player.team == Team.blue && positionIndex % 2 != 0){
+				positionFound = true;
+				player.gameObject.transform.position = positions[positionIndex].position;
+			}
+			else if(player.team == Team.red && positionIndex % 2 == 0)
+			{
+				positionFound = true;
+				player.gameObject.transform.position = positions[positionIndex].position;
+			}
+		}
+
+		player.RevivePlayer();
+	}
 }

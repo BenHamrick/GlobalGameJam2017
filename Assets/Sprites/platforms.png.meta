@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 4164b28782bf3a049bd0b781be9225e1
 timeCreated: 1485036606
 licenseType: Free
@@ -9,6 +10,13 @@ TextureImporter:
     21300004: platforms_2
     21300006: platforms_3
     21300008: platform light 2
+=======
+guid: 46785ced63a1f6942b6b4f0e75855c05
+timeCreated: 1485036514
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName: {}
+>>>>>>> cafc5ab2aaabb25926f0bb103e01472da9a0e6e9
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -39,7 +47,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
+<<<<<<< HEAD
   spriteMode: 2
+=======
+  spriteMode: 1
+>>>>>>> cafc5ab2aaabb25926f0bb103e01472da9a0e6e9
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -63,6 +75,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
   - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -1
@@ -139,6 +152,11 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
+=======
+  spriteSheet:
+    serializedVersion: 2
+    sprites: []
+>>>>>>> cafc5ab2aaabb25926f0bb103e01472da9a0e6e9
     outline: []
   spritePackingTag: 
   userData: 
