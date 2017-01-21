@@ -11,7 +11,6 @@ public class InputController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         playerController = GetComponent<PlayerController>();
-        playerActions = PlayerActions.CreateWithDebugBindings();
     }
 
     // Update is called once per frame

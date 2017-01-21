@@ -37,7 +37,12 @@ public class GameManager : MonoBehaviour {
             }
         }
         GameObject player = (GameObject)Instantiate(playerPrefab, positions[positionIndex].position, Quaternion.identity);
+        positionIndex++;
         PlayerController playerController = player.GetComponent<PlayerController>();
+        if (positionIndex % 2 == 0) {
+
+        }
+        playerController.team = Team
         playerController.inputcontroller.playerActions = PlayerActions.CreateWithDebugBindings();
         playerController.inputcontroller.playerActions.Device = device;
         players.Add(playerController);
