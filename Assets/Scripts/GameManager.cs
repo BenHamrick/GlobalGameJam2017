@@ -40,9 +40,11 @@ public class GameManager : MonoBehaviour {
         positionIndex++;
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (positionIndex % 2 == 0) {
-
+            playerController.team = Team.blue;
+        } else {
+            playerController.team = Team.red;
         }
-        playerController.team = Team
+        
         playerController.inputcontroller.playerActions = PlayerActions.CreateWithDebugBindings();
         playerController.inputcontroller.playerActions.Device = device;
         players.Add(playerController);
