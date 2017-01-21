@@ -59,16 +59,15 @@ public class Wave : MonoBehaviour
 	/// Should be called if a wave ever enters the trigger of another wave
 	/// </summary>
 	/// <param name="collider">Collider.</param>
-	void WaveCollision(Team otherTeam, WaveType otherWType)
+	void WaveCollision(Collider2D collider)
 	{
-		if(otherTeam != team && otherWType == wType)
+		Wave otherWave = collider.gameObject.GetComponent<Wave>();
+		if(otherWave.team != team && otherWave.wType == wType)
 		{
-			RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction);
-			if(hit.collider != null){
-				GameObject exEffect = GameObject.Instantiate(explosionEffect, (Vector3)hit.point,Quaternion.identity);
-				exEffect.AddComponent<WaveExplosion>();
-				Destroy(exEffect.GetComponent<DemoReactivator>());
-			}
+			Vector3 midPoint = transform.position + ((otherWave.transform.position - transform.position) * .5f);
+			GameObject exEffect = GameObject.Instantiate(explosionEffect, midPoint,Quaternion.identity);
+			exEffect.AddComponent<WaveExplosion>();
+			Destroy(exEffect.GetComponent<DemoReactivator>());
 
 			Debug.Log("Collided with wave: ");
 			Destroy(gameObject);
@@ -101,9 +100,7 @@ public class Wave : MonoBehaviour
 		//Check for collision with waves and players
 		if(collider.gameObject.tag == "Wave")
 		{
-			Wave wave = collider.gameObject.GetComponent<Wave>();
-			WaveCollision(wave.team, wave.wType);
-			Destroy(wave);
+			WaveCollision(collider);
 		}
 		else if(collider.gameObject.tag == "Wall")
 		{
