@@ -23,6 +23,7 @@ public class Wave : MonoBehaviour
 	/// Holds the speed in which the wave will move
 	/// </summary>
 	public float movementSpeed;
+	public GameObject explosionEffect;
 	private Team team;// Holds the team this wave belongs to
 	private Vector3 direction;// Holds the direction this wave will move in
 	#endregion
@@ -58,11 +59,17 @@ public class Wave : MonoBehaviour
 	/// Should be called if a wave ever enters the trigger of another wave
 	/// </summary>
 	/// <param name="collider">Collider.</param>
-	void WaveCollision(Collider2D collider)
+	void WaveCollision(Team otherTeam, WaveType otherWType)
 	{
-		Wave wave = collider.gameObject.GetComponent<Wave>();
-		if(wave.team != team && wave.wType == wType)
+		if(otherTeam != team && otherWType == wType)
 		{
+			RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction);
+			if(hit.collider != null){
+				GameObject exEffect = GameObject.Instantiate(explosionEffect, (Vector3)hit.point,Quaternion.identity);
+				exEffect.AddComponent<WaveExplosion>();
+				Destroy(exEffect.GetComponent<DemoReactivator>());
+			}
+
 			Debug.Log("Collided with wave: ");
 			Destroy(gameObject);
 		}
@@ -94,7 +101,9 @@ public class Wave : MonoBehaviour
 		//Check for collision with waves and players
 		if(collider.gameObject.tag == "Wave")
 		{
-			WaveCollision(collider);
+			Wave wave = collider.gameObject.GetComponent<Wave>();
+			WaveCollision(wave.team, wave.wType);
+			Destroy(wave);
 		}
 		else if(collider.gameObject.tag == "Wall")
 		{
