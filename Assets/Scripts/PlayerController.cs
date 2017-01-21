@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     public float sizeScale = 2f;
     public float jumpForce = 1300f;
     public Animator animator;
+    public Transform playerModel;
 
     public GameObject onPlatform;
     public bool isOnGround = true;
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour {
     Rigidbody2D _rigidbody2D;
     public InputController inputcontroller;
 
+    bool lockFalling;
+
     void Awake()
     {
         inputcontroller  = GetComponent<InputController>();
@@ -31,6 +34,9 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _oneWayController = GetComponent<OneWayController>();
+        if (team == Team.red) {
+            playerModel.localScale = new Vector3(-playerModel.localScale.x, playerModel.localScale.y, playerModel.localScale.z);
+        }
     }
 	
 	// Update is called once per frame
@@ -44,8 +50,14 @@ public class PlayerController : MonoBehaviour {
         Vector2 newVelocity = Vector2.ClampMagnitude(new Vector2(_rigidbody2D.velocity.x, 0), currentMaxVelocity);
         _rigidbody2D.velocity = new Vector2(newVelocity.x, _rigidbody2D.velocity.y);
 
-        animator.SetFloat("Speed", (_rigidbody2D.velocity.x / currentMaxVelocity)*.9f);
-        animator.SetFloat("SpeedAbs", Mathf.Abs(_rigidbody2D.velocity.x));
+        if (team == Team.red) {
+            animator.SetFloat("Speed", -(_rigidbody2D.velocity.x / currentMaxVelocity) * .9f);
+            animator.SetFloat("SpeedAbs", Mathf.Abs(_rigidbody2D.velocity.x));
+        }
+
+        if (lockFalling) {
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
+        }
     }
 
     void CheckGound()
@@ -131,5 +143,10 @@ public class PlayerController : MonoBehaviour {
         if (direction.y < -.8f && onPlatform != null && onPlatform.tag == "OneWayPlatform") {
             _oneWayController.Ignorecollision(onPlatform.GetComponent<Collider2D>());
         }
+    }
+
+    public void IsFiering(bool isFier)
+    {
+        lockFalling = isFier;
     }
 }

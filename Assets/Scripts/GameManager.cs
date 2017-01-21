@@ -132,5 +132,8 @@ public class GameManager : MonoBehaviour {
             score++;
         }
         slider.value = score / winningScore;
+        if (slider.value == 1 || slider.value == 0) {
+            gameState = GameState.endOfGame;
+        }
     }
 }
