@@ -40,10 +40,13 @@ public class PlayerActions : PlayerActionSet
         playerActions.Jump.AddDefaultBinding(InputControlType.Action1);
 
         playerActions.Wave1.AddDefaultBinding(InputControlType.Action2);
+        playerActions.Wave1.AddDefaultBinding(Key.Key1);
 
         playerActions.Wave2.AddDefaultBinding(InputControlType.Action3);
+        playerActions.Wave1.AddDefaultBinding(Key.Key2);
 
         playerActions.Wave3.AddDefaultBinding(InputControlType.Action4);
+        playerActions.Wave1.AddDefaultBinding(Key.Key3);
 
         playerActions.Up.AddDefaultBinding(Key.UpArrow);
         playerActions.Down.AddDefaultBinding(Key.DownArrow);

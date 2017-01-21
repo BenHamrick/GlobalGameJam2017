@@ -10,15 +10,18 @@ public class PlayerController : MonoBehaviour {
     public float sizeScale = 2f;
     public float jumpForce = 1300f;
 
+    public GameObject onPlatform;
     public bool isOnGround = true;
     float ghostJumpTimer = 0f;
     float currentMaxVelocity = 0f;
 
+    OneWayController _oneWayController;
     Rigidbody2D _rigidbody2D;
 
 	// Use this for initialization
 	void Start () {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _oneWayController = GetComponent<OneWayController>();
     }
 	
 	// Update is called once per frame
@@ -42,11 +45,14 @@ public class PlayerController : MonoBehaviour {
         float distance = 2f * transform.localScale.x;
 
         RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction, distance);
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor")) {
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + direction * distance, Color.green);
             if (!isOnGround) {
-                PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
+                if (PerlinShake.instance) {
+                    PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
+                }
                 isOnGround = true;
+                onPlatform = hit.collider.gameObject;
                 ghostJumpTimer = 0f;
             }
             return;
@@ -54,11 +60,14 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + direction * distance, Color.red);
 
         hit = Physics2D.Raycast((Vector2)transform.position + left, direction, distance);
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor")) {
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position + left, (Vector2)transform.position + left + direction * distance, Color.green);
             if (!isOnGround) {
-                PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
+                if (PerlinShake.instance) {
+                    PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
+                }
                 isOnGround = true;
+                onPlatform = hit.collider.gameObject;
                 ghostJumpTimer = 0f;
             }
             return;
@@ -66,11 +75,14 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine((Vector2)transform.position + left, (Vector2)transform.position + left + direction * distance, Color.red);
 
         hit = Physics2D.Raycast((Vector2)transform.position - left, direction, distance);
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor")) {
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position - left, (Vector2)transform.position - left + direction * distance, Color.green);
             if (!isOnGround) {
-                PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
+                if (PerlinShake.instance) {
+                    PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
+                }
                 isOnGround = true;
+                onPlatform = hit.collider.gameObject;
                 ghostJumpTimer = 0f;
             }
             return;
@@ -79,6 +91,7 @@ public class PlayerController : MonoBehaviour {
         ghostJumpTimer += Time.deltaTime;
         if (ghostJumpTimer > ghostJumpTime) {
             isOnGround = false;
+            onPlatform = null;
         }
     }
 
@@ -101,5 +114,8 @@ public class PlayerController : MonoBehaviour {
     {
         _rigidbody2D.AddForce(new Vector2(direction.x, 0) * movementForce * Time.deltaTime * 60f);
         currentMaxVelocity = Mathf.Abs(maxVelocity * direction.x);
+        if (direction.y < -.8f && onPlatform != null && onPlatform.tag == "OneWayPlatform") {
+            _oneWayController.Ignorecollision(onPlatform.GetComponent<Collider2D>());
+        }
     }
 }
