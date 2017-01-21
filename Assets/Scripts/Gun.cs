@@ -50,14 +50,14 @@ public class Gun : MonoBehaviour
 			}
 		}
 		#endregion
-
+	
 		/// <summary>
 		/// Should instantiate the wave infront of the gun
 		/// </summary>
 		/// <param name="gun">Gun.</param>
 		public void SpawnWave(Gun gun, Team team)
 		{
-			if(!isOutOfAmmo)// Make sure we aren't on cooldown
+			if(!IsOutOfAmmo)// Make sure we aren't on cooldown
 			{
 				CurrentAmmoCount--;
 				Vector3 positionAdjuster = (team == Team.blue) ? gun.waveSpawnPostionAdjuster : gun.waveSpawnPostionAdjuster * -1;
