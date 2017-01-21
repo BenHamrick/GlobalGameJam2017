@@ -39,8 +39,11 @@ public class GameManager : MonoBehaviour {
 
     float startingTime = 0f;
 
+    public List<MusicTextSync> textSync;
+
     void Awake()
     {
+        textSync = new List<MusicTextSync>();
         pressStart.SetActive(true);
         instance = this;
         score = winningScore / 2f;
@@ -51,9 +54,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
-
+        for (int i = 0; i < textSync.Count; i++) {
+            textSync[i].RandomColor();
+        }
         Debug.Log(eventInfo.messageInfo);
-        Camera.main.backgroundColor = Random.ColorHSV();
     }
 
 
