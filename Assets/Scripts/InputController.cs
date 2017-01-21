@@ -39,7 +39,7 @@ public class InputController : MonoBehaviour {
         }
 
 		if(playerActions.Wave1.IsPressed){
-			playerGun.FireoWave1();
+			playerGun.FireWave1();
 		}
 		else if(playerActions.Wave2.IsPressed){
 			playerGun.FireWave2();

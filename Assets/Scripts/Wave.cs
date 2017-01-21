@@ -23,13 +23,16 @@ public class Wave : MonoBehaviour
 	/// Holds the speed in which the wave will move
 	/// </summary>
 	public float movementSpeed;
+	private Team team;// Holds the team this wave belongs to
+	private Vector3 direction;// Holds the direction this wave will move in
 	#endregion
 
 	#region Movement
 	// Update is called once per frame
 	void Update ()
 	{
-		MoveWave();
+		if(team != null)
+			MoveWave();
 	}
 
 	/// <summary>
@@ -37,7 +40,13 @@ public class Wave : MonoBehaviour
 	/// </summary>
 	void MoveWave()
 	{
-		transform.position += (Vector3)transform.forward * (movementSpeed * Time.deltaTime);
+		transform.position += direction * (movementSpeed * Time.deltaTime);
+	}
+
+	public void SetTeam(Team team)
+	{
+		this.team = team;
+		direction = (team == Team.blue) ? Vector3.right : Vector3.left;
 	}
 	#endregion
 
@@ -48,8 +57,12 @@ public class Wave : MonoBehaviour
 	/// <param name="collider">Collider.</param>
 	void WaveCollision(Collider collider)
 	{
-		Debug.Log("Collided with wave: ");
-		Destroy(gameObject);
+		Wave wave = collider.gameObject.GetComponent<Wave>();
+		if(wave.team != team)
+		{
+			Debug.Log("Collided with wave: ");
+			Destroy(gameObject);
+		}
 	}
 
 	/// <summary>
@@ -57,8 +70,12 @@ public class Wave : MonoBehaviour
 	/// </summary>
 	void PlayerCollision(Collider collider)
 	{
-		Debug.Log("Collided with player: ");
-		Destroy(gameObject);
+		PlayerController player = collider.gameObject.GetComponent<PlayerController>();
+		if(player.team != team)
+		{
+			Debug.Log("Collided with player: ");
+			Destroy(gameObject);
+		}
 	}
 
 	void OnTriggerEnter(Collider collider)
