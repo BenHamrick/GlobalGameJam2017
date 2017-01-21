@@ -13,7 +13,7 @@ public class Gun : MonoBehaviour
 		public Wave.WaveType wType;// holds what kind of wave the ammo is
 		public int maxAmmoCount;// holds the maximum amount of ammo you can have for this wave
 		public int currentAmmoCount;// holds how much ammo is currently left of this wave
-		public bool alreadyRefilling;
+		public bool alreadyRefilling;// holds whether there is already a coroutine that is refilling the ammo of this wave
 		private bool isOutOfAmmo;// Holds whether there is any ammo left or not
 		#endregion
 
@@ -22,6 +22,13 @@ public class Gun : MonoBehaviour
 		{
 			get{
 				return isOutOfAmmo;
+			}
+		}
+
+		public int MaxAmmoCount
+		{
+			get{
+				return maxAmmoCount;
 			}
 		}
 
@@ -37,8 +44,8 @@ public class Gun : MonoBehaviour
 				if(isOutOfAmmo){
 					currentAmmoCount = 0;
 				}
-				else if(currentAmmoCount > maxAmmoCount){
-					currentAmmoCount = maxAmmoCount;
+				else if(currentAmmoCount > MaxAmmoCount){
+					currentAmmoCount = MaxAmmoCount;
 				}
 			}
 		}
@@ -72,9 +79,9 @@ public class Gun : MonoBehaviour
 	public WaveAmmo currentWave;// Holds the current wave teh gun can shot
 	public bool isFiring;// holds whether the player is trying to fire the gun or not
 	public float fireRate;// Holds how fast the gun can shot waves
-	public float ammoRefillRate;
-	public Vector3 waveSpawnPostionAdjuster;
-	private Team team;
+	public float ammoRefillRate;// holds the amount of time in seconds it takes for one 1
+	public Vector3 waveSpawnPostionAdjuster;// This adjust the position that the waves spawn at
+	private Team team; // holds which team the player using this gun is from
 	#endregion
 
 	#region Initializing
@@ -121,7 +128,7 @@ public class Gun : MonoBehaviour
 		while(!wAmmo.IsOutOfAmmo && isFiring)
 		{
 			wAmmo.SpawnWave(this, team);
-			if(wAmmo.CurrentAmmoCount != wAmmo.maxAmmoCount && !wAmmo.alreadyRefilling){
+			if(wAmmo.CurrentAmmoCount != wAmmo.MaxAmmoCount && !wAmmo.alreadyRefilling){
 				StartCoroutine(RefillingAmmo(wAmmo));
 			}
 			yield return new WaitForSeconds(fireRate);
@@ -134,7 +141,7 @@ public class Gun : MonoBehaviour
 	IEnumerator RefillingAmmo(WaveAmmo wAmmo)
 	{
 		wAmmo.alreadyRefilling = true;
-		while(wAmmo.CurrentAmmoCount != wAmmo.maxAmmoCount)
+		while(wAmmo.CurrentAmmoCount != wAmmo.MaxAmmoCount)
 		{
 			yield return new WaitForSeconds(ammoRefillRate);
 			wAmmo.RefillAmmo();
