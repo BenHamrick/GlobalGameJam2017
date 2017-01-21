@@ -58,10 +58,10 @@ public class Wave : MonoBehaviour
 	/// Should be called if a wave ever enters the trigger of another wave
 	/// </summary>
 	/// <param name="collider">Collider.</param>
-	void WaveCollision(Collider collider)
+	void WaveCollision(Collider2D collider)
 	{
 		Wave wave = collider.gameObject.GetComponent<Wave>();
-		if(wave.team != team)
+		if(wave.team != team && wave.wType == wType)
 		{
 			Debug.Log("Collided with wave: ");
 			Destroy(gameObject);
@@ -71,7 +71,7 @@ public class Wave : MonoBehaviour
 	/// <summary>
 	/// Should be called if a player ever enters the trigger of the wave
 	/// </summary>
-	void PlayerCollision(Collider collider)
+	void PlayerCollision(Collider2D collider)
 	{
 		PlayerController player = collider.gameObject.GetComponent<PlayerController>();
 		if(player.team != team)
@@ -81,27 +81,28 @@ public class Wave : MonoBehaviour
 		}
 	}
 
-	void WallCollision(Collider collider)
+	void WallCollision(Collider2D collider)
 	{
-		Debug.Log("Collided with player: ");
+		Debug.Log("Collided with wall: ");
 		Destroy(gameObject);
 	}
 
-	void OnTriggerEnter(Collider collider)
+	void OnTriggerEnter2D(Collider2D collider)
 	{
 		//Check for collision with waves and players
 		if(collider.gameObject.tag == "Wave")
 		{
 			WaveCollision(collider);
 		}
-		else if(collider.gameObject.tag == "Player")
-		{
-			PlayerCollision(collider);
-		}
 		else if(collider.gameObject.tag == "Wall")
 		{
 			WallCollision(collider);
 		}
+		else if(collider.gameObject.tag == "Player")
+		{
+			PlayerCollision(collider);
+		}
+
 	}
 	#endregion
 }

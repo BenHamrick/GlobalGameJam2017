@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using InControl;
 
 public enum Team
@@ -9,11 +10,24 @@ public enum Team
     blue
 }
 
+public enum GameState
+{
+    waitingOnPlayers,
+    startingGame,
+    gamePlay,
+    endOfGame
+}
+
 public class GameManager : MonoBehaviour {
+    public GameState gameState;
     public GameObject playerPrefab;
     public Transform[] positions;
     List<PlayerController> players;
+    public Text startText;
+    public Transform startGameObject;
     int positionIndex = 0;
+
+    float startingTime = 0f;
 
     void Awake()
     {
@@ -21,11 +35,64 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update () {
+        switch (gameState) {
+            case GameState.waitingOnPlayers:
+                waitingOnPlayers();
+                break;
+            case GameState.startingGame:
+                startingGame();
+                break;
+            case GameState.gamePlay:
+                gamePlay();
+                break;
+            case GameState.endOfGame:
+                endOfGame();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void waitingOnPlayers ()
+    {
+        if (players.Count > 0 && players[0].inputcontroller.playerActions.Device != null) {
+            startingTime += Time.deltaTime;
+            if (players[0].inputcontroller.playerActions.Start.WasPressed && startingTime > 1f) {
+                gameState = GameState.startingGame;
+                startingTime = 5f;
+                startGameObject.gameObject.SetActive(true);
+            }
+        }
         for (int i = 0; i < InputManager.Devices.Count; i++) {
             if (InputManager.Devices[i].CommandWasPressed || InputManager.Devices[i].RightStickButton.WasPressed) {
                 StartWasPressed(InputManager.Devices[i]);
             }
         }
+    }
+
+    void startingGame()
+    {
+        startingTime -= Time.deltaTime;
+        if (startingTime < .1f) {
+            startText.text = "GO";
+        } else {
+            startText.text = "" + Mathf.RoundToInt(startingTime);
+        }
+        if (startingTime < -.5f) {
+            gameState = GameState.gamePlay;
+            startGameObject.gameObject.SetActive(false);
+        }
+        startGameObject.localScale = new Vector2(startingTime % 1f + 1f, startingTime % 1f + 1f);
+    }
+
+    void gamePlay()
+    {
+
+    }
+
+    void endOfGame()
+    {
+
     }
 
     void StartWasPressed(InputDevice device)
