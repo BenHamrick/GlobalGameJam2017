@@ -81,6 +81,12 @@ public class Wave : MonoBehaviour
 		}
 	}
 
+	void WallCollision(Collider collider)
+	{
+		Debug.Log("Collided with player: ");
+		Destroy(gameObject);
+	}
+
 	void OnTriggerEnter(Collider collider)
 	{
 		//Check for collision with waves and players
@@ -91,6 +97,10 @@ public class Wave : MonoBehaviour
 		else if(collider.gameObject.tag == "Player")
 		{
 			PlayerCollision(collider);
+		}
+		else if(collider.gameObject.tag == "Wall")
+		{
+			WallCollision(collider);
 		}
 	}
 	#endregion
