@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
     public Transform startGameObject;
     int positionIndex = 0;
 
-    float startingTime = 5f;
+    float startingTime = 0f;
 
     void Awake()
     {
@@ -55,16 +55,17 @@ public class GameManager : MonoBehaviour {
 
     void waitingOnPlayers ()
     {
-        for (int i = 0; i < InputManager.Devices.Count; i++) {
-            if (InputManager.Devices[i].CommandWasPressed || InputManager.Devices[i].RightStickButton.WasPressed) {
-                StartWasPressed(InputManager.Devices[i]);
-            }
-        }
         if (players.Count > 0 && players[0].inputcontroller.playerActions.Device != null) {
-            if (players[0].inputcontroller.playerActions.Start.WasPressed) {
+            startingTime += Time.deltaTime;
+            if (players[0].inputcontroller.playerActions.Start.WasPressed && startingTime > 1f) {
                 gameState = GameState.startingGame;
                 startingTime = 5f;
                 startGameObject.gameObject.SetActive(true);
+            }
+        }
+        for (int i = 0; i < InputManager.Devices.Count; i++) {
+            if (InputManager.Devices[i].CommandWasPressed || InputManager.Devices[i].RightStickButton.WasPressed) {
+                StartWasPressed(InputManager.Devices[i]);
             }
         }
     }
@@ -72,7 +73,16 @@ public class GameManager : MonoBehaviour {
     void startingGame()
     {
         startingTime -= Time.deltaTime;
-        startText.text = "" + Mathf.RoundToInt(startingTime / 1000f);
+        if (startingTime < .1f) {
+            startText.text = "GO";
+        } else {
+            startText.text = "" + Mathf.RoundToInt(startingTime);
+        }
+        if (startingTime < -.5f) {
+            gameState = GameState.gamePlay;
+            startGameObject.gameObject.SetActive(false);
+        }
+        startGameObject.localScale = new Vector2(startingTime % 1f + 1f, startingTime % 1f + 1f);
     }
 
     void gamePlay()
