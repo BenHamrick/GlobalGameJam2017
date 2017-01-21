@@ -127,9 +127,9 @@ public class GameManager : MonoBehaviour {
     public void Score(Team team)
     {
         if (team == Team.blue) {
-            score++;
-        } else {
             score--;
+        } else {
+            score++;
         }
         slider.value = score / winningScore;
     }
