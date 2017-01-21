@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour {
 		isDead = false;
 		gameObject.SetActive(true);
 		Gun gun = GetComponent<Gun>();
+		gun.isFiring = false;
 		gun.alreadyRefilling = false;
 		gun.currentAmmoCount = gun.maxAmmoCount;
 	}

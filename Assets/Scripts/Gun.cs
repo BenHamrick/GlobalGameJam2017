@@ -90,8 +90,9 @@ public class Gun : MonoBehaviour
 
 	IEnumerator FireWave(WaveAmmo wAmmo)
 	{
-		isFiring = true;
-        if (!IsOutOfAmmo) {
+		if (!IsOutOfAmmo) 
+		{
+			isFiring = true;
             wAmmo.SpawnWave(this, team);
             currentAmmoCount--;
 			if (currentAmmoCount != maxAmmoCount && !alreadyRefilling) {
