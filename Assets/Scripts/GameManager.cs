@@ -40,10 +40,12 @@ public class GameManager : MonoBehaviour {
     float startingTime = 0f;
 
     public List<MusicTextSync> textSync;
+    public List<MusicHueSync> hueSync;
 
     void Awake()
     {
         textSync = new List<MusicTextSync>();
+        hueSync = new List<MusicHueSync>();
         pressStart.SetActive(true);
         instance = this;
         score = winningScore / 2f;
@@ -56,6 +58,9 @@ public class GameManager : MonoBehaviour {
     public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
         for (int i = 0; i < textSync.Count; i++) {
             textSync[i].RandomColor();
+        }
+        for (int i = 0; i < hueSync.Count; i++) {
+            hueSync[i].Randomize();
         }
         Debug.Log(eventInfo.messageInfo);
     }
