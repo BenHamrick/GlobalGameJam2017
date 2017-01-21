@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour {
     List<PlayerController> players;
     public Text startText;
     public Transform startGameObject;
+    public Slider slider;
+    public float winningScore;
+    float score;
     int positionIndex = 0;
 
     float startingTime = 0f;
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         instance = this;
+        score = winningScore / 2f;
         players = new List<PlayerController>();
     }
 
@@ -122,6 +126,11 @@ public class GameManager : MonoBehaviour {
 
     public void Score(Team team)
     {
-
+        if (team == Team.blue) {
+            score++;
+        } else {
+            score--;
+        }
+        slider.value = score / winningScore;
     }
 }
