@@ -39,7 +39,6 @@ public class Gun : MonoBehaviour
 				}
 				else if(currentAmmoCount > maxAmmoCount){
 					currentAmmoCount = maxAmmoCount;
-					alreadyRefilling = false;
 				}
 			}
 		}
@@ -85,7 +84,7 @@ public class Gun : MonoBehaviour
 	}
 	#endregion
 
-	#region FireWave
+	#region Fire Wave
 	public void FireWave1()
 	{
 		currentWave = waves[0];
@@ -140,6 +139,7 @@ public class Gun : MonoBehaviour
 			yield return new WaitForSeconds(ammoRefillRate);
 			wAmmo.RefillAmmo();
 		}
+		wAmmo.alreadyRefilling = false;
 	}
 	#endregion
 }
