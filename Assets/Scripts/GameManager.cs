@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using InControl;
+using UnityEngine.SceneManagement;
 
 public enum Team
 {
@@ -27,6 +28,9 @@ public class GameManager : MonoBehaviour {
     List<PlayerController> players;
     public Text startText;
     public Transform startGameObject;
+    public Text winningText;
+    public GameObject winning;
+    public GameObject pressStart;
     public Slider slider;
     public float winningScore;
     float score;
@@ -36,6 +40,7 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
+        pressStart.SetActive(true);
         instance = this;
         score = winningScore / 2f;
         players = new List<PlayerController>();
@@ -79,6 +84,7 @@ public class GameManager : MonoBehaviour {
 
     void startingGame()
     {
+        pressStart.SetActive(false);
         startingTime -= Time.deltaTime;
         if (startingTime < .1f) {
             startText.text = "GO";
@@ -99,7 +105,16 @@ public class GameManager : MonoBehaviour {
 
     void endOfGame()
     {
-
+        startingTime += Time.deltaTime;
+        if (slider.value == 1) {
+            winningText.text = "Red Team Loses";
+        } else {
+            winningText.text = "Blue Team Loses";
+        }
+        if (startingTime > 5f) {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
     }
 
     void StartWasPressed(InputDevice device)
@@ -126,6 +141,9 @@ public class GameManager : MonoBehaviour {
 
     public void Score(Team team)
     {
+        if (gameState != GameState.gamePlay) {
+            return;
+        }
         if (team == Team.blue) {
             score--;
         } else {
@@ -134,6 +152,8 @@ public class GameManager : MonoBehaviour {
         slider.value = score / winningScore;
         if (slider.value == 1 || slider.value == 0) {
             gameState = GameState.endOfGame;
+            startingTime = 0f;
+            winning.SetActive(true);
         }
     }
 }
