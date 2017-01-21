@@ -44,12 +44,13 @@ public class Gun : MonoBehaviour
 		/// Should instantiate the wave infront of the gun
 		/// </summary>
 		/// <param name="gun">Gun.</param>
-		public void SpawnWave(GameObject gun, Team team)
+		public void SpawnWave(Gun gun, Team team)
 		{
 			if(!isOnCoolDown)// Make sure we aren't on cooldown
 			{
 				CurrentAmmoCount--;
-				GameObject w = GameObject.Instantiate(wave, gun.transform.position + gun.transform.forward, Quaternion.identity);
+				Vector3 positionAdjuster = (team == Team.blue) ? gun.waveSpawnPostionAdjuster : gun.waveSpawnPostionAdjuster * -1;
+				GameObject w = GameObject.Instantiate(wave, gun.gameObject.transform.position + gun.gameObject.transform.forward + positionAdjuster , Quaternion.identity);
 				w.GetComponent<Wave>().SetTeam(team);
 			}
 		}
@@ -68,6 +69,7 @@ public class Gun : MonoBehaviour
 	public bool isFiring;// holds whether the player is trying to fire the gun or not
 	public float fireRate;// Holds how fast the gun can shot waves
 	public float coolDownTime;// holds the amount of time that each wave ammo can be on cooldown for
+	public Vector3 waveSpawnPostionAdjuster;
 	private Team team;
 	#endregion
 
@@ -114,7 +116,7 @@ public class Gun : MonoBehaviour
 		isFiring = true;
 		while(!wAmmo.IsOnCoolDown && isFiring)
 		{
-			wAmmo.SpawnWave(gameObject, team);
+			wAmmo.SpawnWave(this, team);
 			if(wAmmo.IsOnCoolDown){
 				StartCoroutine(CoolDown(wAmmo));
 			}
