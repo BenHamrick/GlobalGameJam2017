@@ -83,7 +83,7 @@ public class Wave : MonoBehaviour
 
 	void WallCollision(Collider2D collider)
 	{
-		Debug.Log("Collided with player: ");
+		Debug.Log("Collided with wall: ");
 		Destroy(gameObject);
 	}
 
