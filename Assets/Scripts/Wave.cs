@@ -84,6 +84,8 @@ public class Wave : MonoBehaviour
 	void WallCollision(Collider2D collider)
 	{
 		Debug.Log("Collided with wall: ");
+		WallController wController = collider.gameObject.GetComponent<WallController>();
+		wController.Score();
 		Destroy(gameObject);
 	}
 
