@@ -31,8 +31,7 @@ public class Wave : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if(team != null)
-			MoveWave();
+		MoveWave();
 	}
 
 	/// <summary>
@@ -43,6 +42,10 @@ public class Wave : MonoBehaviour
 		transform.position += direction * (movementSpeed * Time.deltaTime);
 	}
 
+	/// <summary>
+	/// Should set the team that shot this wave
+	/// </summary>
+	/// <param name="team">Team.</param>
 	public void SetTeam(Team team)
 	{
 		this.team = team;
