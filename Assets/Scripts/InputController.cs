@@ -42,15 +42,18 @@ public class InputController : MonoBehaviour {
 
 		if(playerActions.Wave1.IsPressed){
 			playerGun.FireWave1();
-		}
+            playerController.IsFiering(true);
+        }
 		else if(playerActions.Wave2.IsPressed){
 			playerGun.FireWave2();
-		}
+            playerController.IsFiering(true);
+        }
 		else if(playerActions.Wave3.IsPressed){
 			playerGun.FireWave3();
-		}
+            playerController.IsFiering(true);
+        }
 		else{
-			playerGun.isFiring = false;
+            playerController.IsFiering(false);
 		}
     }
 }

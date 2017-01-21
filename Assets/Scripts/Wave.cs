@@ -23,6 +23,9 @@ public class Wave : MonoBehaviour
 	/// Holds the speed in which the wave will move
 	/// </summary>
 	public float movementSpeed;
+	public float damage;// holds the amount of damge the wave can do to a player
+	public GameObject explosionEffect;// Holds the prefab of a particle effect that is spawned when the wave collideds with another
+	public GameObject scoreEffect;// Holds the particle effect that will be spawned when the wave collideds with the wall of the other team
 	private Team team;// Holds the team this wave belongs to
 	private Vector3 direction;// Holds the direction this wave will move in
 	#endregion
@@ -60,9 +63,14 @@ public class Wave : MonoBehaviour
 	/// <param name="collider">Collider.</param>
 	void WaveCollision(Collider2D collider)
 	{
-		Wave wave = collider.gameObject.GetComponent<Wave>();
-		if(wave.team != team && wave.wType == wType)
+		Wave otherWave = collider.gameObject.GetComponent<Wave>();
+		if(otherWave.team != team && otherWave.wType == wType)
 		{
+			Vector3 midPoint = transform.position + ((otherWave.transform.position - transform.position) * .5f);
+			GameObject exEffect = GameObject.Instantiate(explosionEffect, midPoint,Quaternion.identity);
+			exEffect.AddComponent<WaveExplosion>();
+			Destroy(exEffect.GetComponent<DemoReactivator>());
+
 			Debug.Log("Collided with wave: ");
 			Destroy(gameObject);
 		}
@@ -74,8 +82,9 @@ public class Wave : MonoBehaviour
 	void PlayerCollision(Collider2D collider)
 	{
 		PlayerController player = collider.gameObject.GetComponent<PlayerController>();
-		if(player.team != team)
+		if(player.team != team && player.health > 0)
 		{
+			player.health -= damage;
 			Debug.Log("Collided with player: ");
 			Destroy(gameObject);
 		}
@@ -84,6 +93,11 @@ public class Wave : MonoBehaviour
 	void WallCollision(Collider2D collider)
 	{
 		Debug.Log("Collided with wall: ");
+		GameObject scEffect = GameObject.Instantiate(scoreEffect, transform.position,Quaternion.identity);
+
+		scEffect.AddComponent<WaveExplosion>();
+		Destroy(scEffect.GetComponent<DemoReactivator>());
+
 		WallController wController = collider.gameObject.GetComponent<WallController>();
 		wController.Score();
 		Destroy(gameObject);
