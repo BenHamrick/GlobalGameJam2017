@@ -61,7 +61,7 @@ public class Wave : MonoBehaviour
 	void WaveCollision(Collider2D collider)
 	{
 		Wave wave = collider.gameObject.GetComponent<Wave>();
-		if(wave.team != team)
+		if(wave.team != team && wave.wType == wType)
 		{
 			Debug.Log("Collided with wave: ");
 			Destroy(gameObject);
