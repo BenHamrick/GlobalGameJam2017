@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
     public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
 
         Debug.Log(eventInfo.messageInfo);
-
+        Camera.main.backgroundColor = Random.ColorHSV();
     }
 
 
