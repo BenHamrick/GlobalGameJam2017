@@ -1,0 +1,244 @@
+fileFormatVersion: 2
+guid: 0a25794ff104f56419d2f5e0014f8eb2
+timeCreated: 1484980594
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Body
+    21300002: Upper Left Leg
+    21300004: Upper Right Leg
+    21300006: Lower Left Leg
+    21300008: Left Foot
+    21300010: Right Foot
+    21300012: Lower Right Leg
+    21300014: Fuel Tank
+    21300016: Helmet
+    21300018: player1_5
+    21300020: Accelerator
+    21300022: player1_9
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Body
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 252
+        width: 1091
+        height: 849
+      alignment: 9
+      pivot: {x: 0.30762923, y: 0.34108293}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Upper Left Leg
+      rect:
+        serializedVersion: 2
+        x: 1210
+        y: 789
+        width: 256
+        height: 288
+      alignment: 9
+      pivot: {x: 0.19549179, y: 0.9320378}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Upper Right Leg
+      rect:
+        serializedVersion: 2
+        x: 1554
+        y: 750
+        width: 185
+        height: 351
+      alignment: 9
+      pivot: {x: 0.4108636, y: 0.9740804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Fuel Tank
+      rect:
+        serializedVersion: 2
+        x: 1790
+        y: 620
+        width: 172
+        height: 281
+      alignment: 9
+      pivot: {x: 0.6220213, y: 0.44665092}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Helmet
+      rect:
+        serializedVersion: 2
+        x: 2163
+        y: 761
+        width: 88
+        height: 141
+      alignment: 9
+      pivot: {x: 0.3296481, y: 0.563793}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: player1_5
+      rect:
+        serializedVersion: 2
+        x: 2167
+        y: 899
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Lower Left Leg
+      rect:
+        serializedVersion: 2
+        x: 1245
+        y: 413
+        width: 199
+        height: 299
+      alignment: 9
+      pivot: {x: 0.7937975, y: 0.96628106}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Accelerator
+      rect:
+        serializedVersion: 2
+        x: 2228
+        y: 398
+        width: 173
+        height: 51
+      alignment: 9
+      pivot: {x: 0.5, y: 0.88212854}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Lower Right Leg
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 59
+        width: 164
+        height: 334
+      alignment: 9
+      pivot: {x: 0.5914098, y: 0.9757683}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: player1_9
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 391
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Left Foot
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 68
+        width: 145
+        height: 56
+      alignment: 9
+      pivot: {x: 0.2828864, y: 0.8747808}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Right Foot
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 60
+        width: 135
+        height: 61
+      alignment: 9
+      pivot: {x: 0.300118, y: 0.91778827}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
