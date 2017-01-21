@@ -117,11 +117,6 @@ public class Gun : MonoBehaviour
 		}
 	}
 
-	void EndWave()
-	{
-		StopCoroutine("SpawnWave");
-	}
-
 	IEnumerator FireWave(WaveAmmo wAmmo)
 	{
 		isFiring = true;
