@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     public float maxVelocity = 10f;
     public float sizeScale = 2f;
     public float jumpForce = 1300f;
+    public Animator animator;
 
     public GameObject onPlatform;
     public bool isOnGround = true;
@@ -35,12 +36,16 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         CheckGound();
+        animator.SetBool("OnGround", isOnGround);
     }
 
     void FixedUpdate()
     {
         Vector2 newVelocity = Vector2.ClampMagnitude(new Vector2(_rigidbody2D.velocity.x, 0), currentMaxVelocity);
         _rigidbody2D.velocity = new Vector2(newVelocity.x, _rigidbody2D.velocity.y);
+
+        animator.SetFloat("Speed", (_rigidbody2D.velocity.x / currentMaxVelocity)*.9f);
+        animator.SetFloat("SpeedAbs", Mathf.Abs(_rigidbody2D.velocity.x));
     }
 
     void CheckGound()
@@ -116,6 +121,7 @@ public class PlayerController : MonoBehaviour {
         ghostJumpTimer = ghostJumpTime;
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0.0f);
         _rigidbody2D.AddForce(Vector2.up * jumpForce);
+        animator.SetTrigger("Jump");
     }
 
     public void Move(Vector2 direction)
