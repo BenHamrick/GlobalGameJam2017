@@ -23,7 +23,9 @@ public class Wave : MonoBehaviour
 	/// Holds the speed in which the wave will move
 	/// </summary>
 	public float movementSpeed;
-	public GameObject explosionEffect;
+	public float damage;// holds the amount of damge the wave can do to a player
+	public GameObject explosionEffect;// Holds the prefab of a particle effect that is spawned when the wave collideds with another
+	public GameObject scoreEffect;// Holds the particle effect that will be spawned when the wave collideds with the wall of the other team
 	private Team team;// Holds the team this wave belongs to
 	private Vector3 direction;// Holds the direction this wave will move in
 	#endregion
@@ -80,8 +82,9 @@ public class Wave : MonoBehaviour
 	void PlayerCollision(Collider2D collider)
 	{
 		PlayerController player = collider.gameObject.GetComponent<PlayerController>();
-		if(player.team != team)
+		if(player.team != team && player.health > 0)
 		{
+			player.health -= damage;
 			Debug.Log("Collided with player: ");
 			Destroy(gameObject);
 		}
@@ -90,6 +93,11 @@ public class Wave : MonoBehaviour
 	void WallCollision(Collider2D collider)
 	{
 		Debug.Log("Collided with wall: ");
+		GameObject scEffect = GameObject.Instantiate(scoreEffect, transform.position,Quaternion.identity);
+
+		scEffect.AddComponent<WaveExplosion>();
+		Destroy(scEffect.GetComponent<DemoReactivator>());
+
 		WallController wController = collider.gameObject.GetComponent<WallController>();
 		wController.Score();
 		Destroy(gameObject);
@@ -108,7 +116,7 @@ public class Wave : MonoBehaviour
 		}
 		else if(collider.gameObject.tag == "Player")
 		{
-			//PlayerCollision(collider);
+			PlayerCollision(collider);
 		}
 
 	}

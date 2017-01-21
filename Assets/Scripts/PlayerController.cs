@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     public Team team;
 
+	public float health = 100f;
     public float ghostJumpTime = 1f;
     public float movementForce = 50f;
     public float maxVelocity = 10f;
