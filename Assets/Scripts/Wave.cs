@@ -23,10 +23,6 @@ public class Wave : MonoBehaviour
 	/// Holds the speed in which the wave will move
 	/// </summary>
 	public float movementSpeed;
-	/// <summary>
-	/// Holds the direction this wave will move towards
-	/// </summary>
-	private Vector2 direction;
 	#endregion
 
 	#region Movement
@@ -35,22 +31,13 @@ public class Wave : MonoBehaviour
 	{
 		MoveWave();
 	}
-		
-	/// <summary>
-	/// Should set the direction the wave will be moving, this should be set by the gun
-	/// </summary>
-	/// <param name="direction">Direction.</param>
-	public void SetDirection(Vector2 direction)
-	{
-		this.direction = direction;
-	}
 
 	/// <summary>
 	/// This will move the wave in it's chosen direction
 	/// </summary>
 	void MoveWave()
 	{
-		transform.position += (Vector3)direction * (movementSpeed * Time.deltaTime);
+		transform.position += (Vector3)transform.forward * (movementSpeed * Time.deltaTime);
 	}
 	#endregion
 
@@ -62,6 +49,7 @@ public class Wave : MonoBehaviour
 	void WaveCollision(Collider collider)
 	{
 		Debug.Log("Collided with wave: ");
+		Destroy(gameObject);
 	}
 
 	/// <summary>
@@ -70,6 +58,7 @@ public class Wave : MonoBehaviour
 	void PlayerCollision(Collider collider)
 	{
 		Debug.Log("Collided with player: ");
+		Destroy(gameObject);
 	}
 
 	void OnTriggerEnter(Collider collider)
