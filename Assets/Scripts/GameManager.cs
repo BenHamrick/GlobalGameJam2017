@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public GameObject pressStart;
     public Slider slider;
     public float winningScore;
+    public BeatDetection beatDetection;
     float score;
     int positionIndex = 0;
 
@@ -44,7 +45,17 @@ public class GameManager : MonoBehaviour {
         instance = this;
         score = winningScore / 2f;
         players = new List<PlayerController>();
+        beatDetection = GetComponent<BeatDetection>();  
+
+        beatDetection.CallBackFunction = MyCallbackEventHandler;
     }
+
+    public void MyCallbackEventHandler(BeatDetection.EventInfo eventInfo) {
+
+        Debug.Log(eventInfo.messageInfo);
+
+    }
+
 
     void Update () {
         switch (gameState) {
