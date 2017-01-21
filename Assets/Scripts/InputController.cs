@@ -54,7 +54,6 @@ public class InputController : MonoBehaviour {
         }
 		else{
             playerController.IsFiering(false);
-			playerGun.isFiring = false;
 		}
     }
 }

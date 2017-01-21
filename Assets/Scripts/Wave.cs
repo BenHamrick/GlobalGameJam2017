@@ -108,7 +108,7 @@ public class Wave : MonoBehaviour
 		}
 		else if(collider.gameObject.tag == "Player")
 		{
-			PlayerCollision(collider);
+			//PlayerCollision(collider);
 		}
 
 	}

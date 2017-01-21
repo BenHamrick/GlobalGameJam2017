@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (lockFalling) {
-            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
+            _rigidbody2D.velocity = new Vector2(0, 0);
         }
     }
 
