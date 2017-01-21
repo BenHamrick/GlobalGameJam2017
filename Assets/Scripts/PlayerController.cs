@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour {
 
     OneWayController _oneWayController;
     Rigidbody2D _rigidbody2D;
+    public InputController inputcontroller;
+
+    void Awake()
+    {
+        inputcontroller  = GetComponent<InputController>();
+    }
 
 	// Use this for initialization
 	void Start () {

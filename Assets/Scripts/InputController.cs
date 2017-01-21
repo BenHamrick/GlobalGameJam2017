@@ -11,7 +11,9 @@ public class InputController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         playerController = GetComponent<PlayerController>();
-        playerActions = PlayerActions.CreateWithDebugBindings();
+        if (playerActions == null) {
+            playerActions = PlayerActions.CreateWithDebugBindings();
+        }
     }
 
     // Update is called once per frame
@@ -39,7 +41,7 @@ public class InputController : MonoBehaviour {
         }
 
 		if(playerActions.Wave1.IsPressed){
-			playerGun.FireoWave1();
+			playerGun.FireWave1();
 		}
 		else if(playerActions.Wave2.IsPressed){
 			playerGun.FireWave2();

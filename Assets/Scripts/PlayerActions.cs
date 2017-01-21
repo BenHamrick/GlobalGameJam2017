@@ -43,10 +43,10 @@ public class PlayerActions : PlayerActionSet
         playerActions.Wave1.AddDefaultBinding(Key.Key1);
 
         playerActions.Wave2.AddDefaultBinding(InputControlType.Action3);
-        playerActions.Wave1.AddDefaultBinding(Key.Key2);
+        playerActions.Wave2.AddDefaultBinding(Key.Key2);
 
         playerActions.Wave3.AddDefaultBinding(InputControlType.Action4);
-        playerActions.Wave1.AddDefaultBinding(Key.Key3);
+        playerActions.Wave3.AddDefaultBinding(Key.Key3);
 
         playerActions.Up.AddDefaultBinding(Key.UpArrow);
         playerActions.Down.AddDefaultBinding(Key.DownArrow);

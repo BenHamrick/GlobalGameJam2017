@@ -23,6 +23,8 @@ public class Wave : MonoBehaviour
 	/// Holds the speed in which the wave will move
 	/// </summary>
 	public float movementSpeed;
+	private Team team;// Holds the team this wave belongs to
+	private Vector3 direction;// Holds the direction this wave will move in
 	#endregion
 
 	#region Movement
@@ -37,7 +39,17 @@ public class Wave : MonoBehaviour
 	/// </summary>
 	void MoveWave()
 	{
-		transform.position += (Vector3)transform.forward * (movementSpeed * Time.deltaTime);
+		transform.position += direction * (movementSpeed * Time.deltaTime);
+	}
+
+	/// <summary>
+	/// Should set the team that shot this wave
+	/// </summary>
+	/// <param name="team">Team.</param>
+	public void SetTeam(Team team)
+	{
+		this.team = team;
+		direction = (team == Team.blue) ? Vector3.right : Vector3.left;
 	}
 	#endregion
 
@@ -48,14 +60,28 @@ public class Wave : MonoBehaviour
 	/// <param name="collider">Collider.</param>
 	void WaveCollision(Collider collider)
 	{
-		Debug.Log("Collided with wave: ");
-		Destroy(gameObject);
+		Wave wave = collider.gameObject.GetComponent<Wave>();
+		if(wave.team != team)
+		{
+			Debug.Log("Collided with wave: ");
+			Destroy(gameObject);
+		}
 	}
 
 	/// <summary>
 	/// Should be called if a player ever enters the trigger of the wave
 	/// </summary>
 	void PlayerCollision(Collider collider)
+	{
+		PlayerController player = collider.gameObject.GetComponent<PlayerController>();
+		if(player.team != team)
+		{
+			Debug.Log("Collided with player: ");
+			Destroy(gameObject);
+		}
+	}
+
+	void WallCollision(Collider collider)
 	{
 		Debug.Log("Collided with player: ");
 		Destroy(gameObject);
@@ -71,6 +97,10 @@ public class Wave : MonoBehaviour
 		else if(collider.gameObject.tag == "Player")
 		{
 			PlayerCollision(collider);
+		}
+		else if(collider.gameObject.tag == "Wall")
+		{
+			WallCollision(collider);
 		}
 	}
 	#endregion
