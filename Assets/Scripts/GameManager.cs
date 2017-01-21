@@ -167,4 +167,27 @@ public class GameManager : MonoBehaviour {
             winning.SetActive(true);
         }
     }
+
+	public IEnumerator Respawn(PlayerController player)
+	{
+		yield return new WaitForSeconds(5f);
+		bool positionFound = false;
+		while(!positionFound)
+		{
+			int positionIndex = Random.Range(0, positions.Length - 1);
+			if(player.team == Team.blue && positionIndex % 2 != 0){
+				positionFound = true;
+				player.gameObject.transform.position = positions[positionIndex].position;
+			}
+			else if(player.team == Team.red && positionIndex % 2 == 0)
+			{
+				positionFound = true;
+				player.gameObject.transform.position = positions[positionIndex].position;
+			}
+		}
+
+		player.health = 100;
+		player.inputcontroller.enabled = true;
+		player.enabled = true;
+	}
 }
