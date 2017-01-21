@@ -94,7 +94,7 @@ public class Gun : MonoBehaviour
         if (!IsOutOfAmmo) {
             wAmmo.SpawnWave(this, team);
             currentAmmoCount--;
-            if (currentAmmoCount != maxAmmoCount && !alreadyRefilling) {
+			if (currentAmmoCount != maxAmmoCount && !alreadyRefilling) {
                 StartCoroutine(RefillingAmmo());
             }
 

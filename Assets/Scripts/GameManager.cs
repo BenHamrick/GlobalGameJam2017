@@ -190,8 +190,6 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-		player.health = 100;
-		player.inputcontroller.enabled = true;
-		player.enabled = true;
+		player.RevivePlayer();
 	}
 }
