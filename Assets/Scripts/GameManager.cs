@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
     public Transform[] positions;
     List<PlayerController> players;
     public Text startText;
+    public Transform startGameObject;
     int positionIndex = 0;
 
     float startingTime = 5f;
@@ -59,10 +60,11 @@ public class GameManager : MonoBehaviour {
                 StartWasPressed(InputManager.Devices[i]);
             }
         }
-        if (players[0].inputcontroller.playerActions.Device != null) {
+        if (players.Count > 0 && players[0].inputcontroller.playerActions.Device != null) {
             if (players[0].inputcontroller.playerActions.Start.WasPressed) {
                 gameState = GameState.startingGame;
                 startingTime = 5f;
+                startGameObject.gameObject.SetActive(true);
             }
         }
     }
