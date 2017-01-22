@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour {
 
     public Team team;
 
+    public SpriteRenderer helmet;
+    public SpriteRenderer gunPack;
+
 	public float maxHealth = 100f;
 	private float health;
     public float ghostJumpTime = 1f;
@@ -49,7 +52,11 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-		health = maxHealth;
+        Color color = Random.ColorHSV(0f,1f,1f,1f);
+        color.a = 1f;
+        helmet.color = color;
+        gunPack.color = color;
+        health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
 
 		if(team == Team.blue){
