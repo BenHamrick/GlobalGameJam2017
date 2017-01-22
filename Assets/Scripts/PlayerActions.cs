@@ -82,7 +82,6 @@ public class PlayerActions : PlayerActionSet
         playerActions.Start.AddDefaultBinding(InputControlType.Start);
 
         playerActions.Jump.AddDefaultBinding(InputControlType.Action1);
-        playerActions.Jump.AddDefaultBinding(InputControlType.LeftStickUp);
         playerActions.Jump.AddDefaultBinding(InputControlType.DPadUp);
 
         playerActions.Wave1.AddDefaultBinding(InputControlType.Action2);
