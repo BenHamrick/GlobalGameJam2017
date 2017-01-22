@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour {
     {
         helmet.color = playerColors[colorIndex];
         gunPack.color = playerColors[colorIndex];
+        colorIndex++;
         health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
     }
