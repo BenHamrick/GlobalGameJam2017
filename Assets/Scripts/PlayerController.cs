@@ -5,10 +5,14 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+    static int colorIndex;
+
     public Team team;
 
     public SpriteRenderer helmet;
     public SpriteRenderer gunPack;
+
+    public Color[] playerColors;
 
 	public float maxHealth = 100f;
 	private float health;
@@ -56,10 +60,8 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-        Color color = Random.ColorHSV(0f,1f,1f,1f);
-        color.a = 1f;
-        helmet.color = color;
-        gunPack.color = color;
+        helmet.color = playerColors[colorIndex];
+        gunPack.color = playerColors[colorIndex];
         health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
     }
