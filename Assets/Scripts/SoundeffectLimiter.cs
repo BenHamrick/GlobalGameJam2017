@@ -6,7 +6,7 @@ public class SoundeffectLimiter : MonoBehaviour {
 
 
     static Dictionary<int, int> sounds; 
-    public int maxSounds;
+    public int skipSounds;
     public int id;
     AudioSource audioSource;
 
@@ -19,19 +19,12 @@ public class SoundeffectLimiter : MonoBehaviour {
         if (sounds.ContainsKey(id) == false) {
             sounds.Add(id, 0);
         }
-        if (sounds[id] > maxSounds) {
-            audioSource.enabled = false;
-            enabled = false;
+        if (sounds[id] > skipSounds) {
+            sounds[id] = 0;
         } else {
             sounds[id]++;
-        }
-	}
-
-    void Update ()
-    {
-        if(audioSource.isPlaying == false) {
-            sounds[id]--;
+            audioSource.enabled = false;
             enabled = false;
         }
-    }
+	}
 }
