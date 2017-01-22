@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     public Animator animator;
     public Transform playerModel;
 
+	public GameObject[] deathParticles;
 	public GameObject deathParticle;
     public GameObject onPlatform;
 	public bool isDead;
@@ -47,6 +48,13 @@ public class PlayerController : MonoBehaviour {
     {
 		health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
+
+		if(team == Team.blue){
+			deathParticle = deathParticles[0];
+		}
+		else{
+			deathParticle = deathParticles[1];
+		}
     }
 
 	// Use this for initialization
@@ -68,6 +76,8 @@ public class PlayerController : MonoBehaviour {
 	{
 		isDead = true;
 		GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
+		GameObject dParticle = GameObject.Instantiate(deathParticle, transform.position, deathParticle.transform.rotation);
+		dParticle.AddComponent<Explosion>();
 		gameObject.SetActive(false);
 	}
 

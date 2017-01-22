@@ -68,7 +68,7 @@ public class Wave : MonoBehaviour
 		{
 			Vector3 midPoint = transform.position + ((otherWave.transform.position - transform.position) * .5f);
 			GameObject exEffect = GameObject.Instantiate(explosionEffect, midPoint,Quaternion.identity);
-			exEffect.AddComponent<WaveExplosion>();
+			exEffect.AddComponent<Explosion>();
 			Destroy(exEffect.GetComponent<DemoReactivator>());
 
 			Debug.Log("Collided with wave: ");
@@ -95,7 +95,7 @@ public class Wave : MonoBehaviour
 		Debug.Log("Collided with wall: ");
 		GameObject scEffect = GameObject.Instantiate(scoreEffect, transform.position,Quaternion.identity);
 
-		scEffect.AddComponent<WaveExplosion>();
+		scEffect.AddComponent<Explosion>();
 		Destroy(scEffect.GetComponent<DemoReactivator>());
 
 		WallController wController = collider.gameObject.GetComponent<WallController>();
