@@ -102,8 +102,11 @@ public class PlayerController : MonoBehaviour {
 
         if (team == Team.red) {
             animator.SetFloat("Speed", -(_rigidbody2D.velocity.x / currentMaxVelocity) * .9f);
-            animator.SetFloat("SpeedAbs", Mathf.Abs(_rigidbody2D.velocity.x));
+        } else {
+            animator.SetFloat("Speed", (_rigidbody2D.velocity.x / currentMaxVelocity) * .9f);
         }
+
+        animator.SetFloat("SpeedAbs", Mathf.Abs(_rigidbody2D.velocity.x));
 
         if (lockFalling) {
             _rigidbody2D.velocity = new Vector2(0, 0);
