@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
         helmet.color = playerColors[colorIndex];
         gunPack.color = playerColors[colorIndex];
         gunBar.color = playerColors[colorIndex];
@@ -69,8 +71,18 @@ public class PlayerController : MonoBehaviour {
         inputcontroller  = GetComponent<InputController>();
     }
 
-	// Use this for initialization
-	void Start () {
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        colorIndex = 0;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    // Use this for initialization
+    void Start () {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _oneWayController = GetComponent<OneWayController>();
         if (team == Team.red) {
