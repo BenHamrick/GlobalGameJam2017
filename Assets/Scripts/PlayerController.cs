@@ -48,6 +48,9 @@ public class PlayerController : MonoBehaviour {
 				health = 0;
 				KillPlayer();
 			}
+            if (health > maxHealth) {
+                health = maxHealth;
+            }
 		}
 	}
 
@@ -226,5 +229,17 @@ public class PlayerController : MonoBehaviour {
     public void IsFiering(bool isFier)
     {
         lockFalling = isFier;
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "HealthPowerup") {
+            collider.gameObject.SetActive(false);
+            Health = maxHealth;
+        }
+        else if (collider.tag == "RechargePowerup") {
+            GetComponent<Gun>().currentAmmoCount = GetComponent<Gun>().maxAmmoCount;
+            collider.gameObject.SetActive(false);
+        }
     }
 }
