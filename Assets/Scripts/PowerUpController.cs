@@ -15,8 +15,8 @@ public class PowerUpController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        requieredHealthTime += 30f;
-        requieredEnergyTime += 40f;
+        requieredHealthTime += 10f;
+        requieredEnergyTime += 15f;
     }
 	
 	// Update is called once per frame
