@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour {
     {
         startingTime += Time.deltaTime;
         if (slider.value == 1) {
-            winningText.text = "Red Team Loses";
+            winningText.text = "Orange Team Loses";
 			deathLazers[0].SetActive(true);
 			killTeam(Team.red);
         } else {
