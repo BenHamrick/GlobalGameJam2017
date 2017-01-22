@@ -5,26 +5,32 @@ using UnityEngine;
 public class SoundeffectLimiter : MonoBehaviour {
 
 
-    static int sounds; 
+    static Dictionary<int, int> sounds; 
     public int maxSounds;
-
+    public int id;
     AudioSource audioSource;
 
 	// Use this for initialization
 	void OnEnable () {
+        if (sounds == null) {
+            sounds = new Dictionary<int, int>();
+        }
         audioSource = GetComponent<AudioSource>();
-        if (sounds > maxSounds) {
+        if (sounds.ContainsKey(id) == false) {
+            sounds.Add(id, 0);
+        }
+        if (sounds[id] > maxSounds) {
             audioSource.enabled = false;
             enabled = false;
         } else {
-            sounds++;
+            sounds[id]++;
         }
 	}
 
     void Update ()
     {
         if(audioSource.isPlaying == false) {
-            sounds--;
+            sounds[id]--;
             enabled = false;
         }
     }
