@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour {
 
     public Team team;
 
+    public SpriteRenderer helmet;
+    public SpriteRenderer gunPack;
+
 	public float maxHealth = 100f;
 	private float health;
     public float ghostJumpTime = 1f;
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour {
     OneWayController _oneWayController;
     Rigidbody2D _rigidbody2D;
     public InputController inputcontroller;
+    public ControllerVibrationManager vibrationManager;
 
     bool lockFalling;
 
@@ -49,15 +53,12 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-		health = maxHealth;
+        Color color = Random.ColorHSV(0f,1f,1f,1f);
+        color.a = 1f;
+        helmet.color = color;
+        gunPack.color = color;
+        health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
-
-		if(team == Team.blue){
-			deathParticle = deathParticles[0];
-		}
-		else{
-			deathParticle = deathParticles[1];
-		}
     }
 
 	// Use this for initialization
@@ -67,6 +68,15 @@ public class PlayerController : MonoBehaviour {
         if (team == Team.red) {
             playerModel.localScale = new Vector3(-playerModel.localScale.x, playerModel.localScale.y, playerModel.localScale.z);
         }
+
+        if (team == Team.blue) {
+            deathParticle = deathParticles[0];
+        }
+        else {
+            deathParticle = deathParticles[1];
+        }
+
+        vibrationManager =  GameManager.instance.gameObject.GetComponent<ControllerVibrationManager>();
     }
 
 	// Update is called once per frame
@@ -76,16 +86,33 @@ public class PlayerController : MonoBehaviour {
         healthSlider.value = health / maxHealth;
     }
 
-	public void KillPlayer()
+	public void damagePlayer(float damage)
 	{
-        if (PerlinShake.instance) {
-            PerlinShake.instance.PlayShake(0.4f, 10.0f, 0.15f);
-        }
-        isDead = true;
-		GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
-		GameObject dParticle = GameObject.Instantiate(deathParticle, transform.position, deathParticle.transform.rotation);
-		dParticle.AddComponent<Explosion>();
-		gameObject.SetActive(false);
+		Health -= damage;
+		vibrationManager.StartControllerVibration(this,1f, .25f);
+	}
+
+	public void KillPlayer(bool regularDeath = true)
+	{
+		if(!isDead)
+		{
+	        if (PerlinShake.instance) {
+	            PerlinShake.instance.PlayShake(0.4f, 10.0f, 0.15f);
+	        }
+	        isDead = true;
+			GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
+			GameObject dParticle = GameObject.Instantiate(deathParticle, transform.position, deathParticle.transform.rotation);
+			dParticle.AddComponent<Explosion>();
+
+			if(regularDeath){
+                vibrationManager.StartControllerVibration(this, 1f, .5f);
+			}
+			else{
+                vibrationManager.StartControllerVibration(this, 1f, 2.5f);
+			}
+
+			gameObject.SetActive(false);
+		}
 	}
 
 	public void RevivePlayer()

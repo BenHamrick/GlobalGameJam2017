@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour {
 		for(int i = 0; i < players.Count; i++)
 		{
 			if(players[i].team == team)
-				players[i].KillPlayer();
+				players[i].KillPlayer(regularDeath:false);
 		}
 	}
 
