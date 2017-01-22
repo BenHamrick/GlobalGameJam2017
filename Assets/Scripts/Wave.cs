@@ -82,9 +82,9 @@ public class Wave : MonoBehaviour
 	void PlayerCollision(Collider2D collider)
 	{
 		PlayerController player = collider.gameObject.GetComponent<PlayerController>();
-		if(player.team != team && player.health > 0)
+		if(player.team != team && player.Health > 0)
 		{
-			player.health -= damage;
+			player.Health -= damage;
 			Debug.Log("Collided with player: ");
 			Destroy(gameObject);
 		}

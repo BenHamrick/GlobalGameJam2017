@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour {
 
     public Team team;
 
-	public float health = 100f;
+	public float maxHealth = 100f;
+	private float health;
     public float ghostJumpTime = 1f;
     public float movementForce = 50f;
     public float maxVelocity = 10f;
@@ -15,7 +16,9 @@ public class PlayerController : MonoBehaviour {
     public Animator animator;
     public Transform playerModel;
 
+	public GameObject deathParticle;
     public GameObject onPlatform;
+	public bool isDead;
     public bool isOnGround = true;
     float ghostJumpTimer = 0f;
     float currentMaxVelocity = 0f;
@@ -26,8 +29,23 @@ public class PlayerController : MonoBehaviour {
 
     bool lockFalling;
 
+	public float Health
+	{
+		get{
+			return health;
+		}
+		set{
+			health = value;
+			if(health <= 0){
+				health = 0;
+				KillPlayer();
+			}
+		}
+	}
+
     void Awake()
     {
+		health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
     }
 
@@ -39,12 +57,30 @@ public class PlayerController : MonoBehaviour {
             playerModel.localScale = new Vector3(-playerModel.localScale.x, playerModel.localScale.y, playerModel.localScale.z);
         }
     }
-	
+
 	// Update is called once per frame
 	void Update () {
         CheckGound();
         animator.SetBool("OnGround", isOnGround);
     }
+
+	public void KillPlayer()
+	{
+		isDead = true;
+		GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
+		gameObject.SetActive(false);
+	}
+
+	public void RevivePlayer()
+	{
+		health = 100f;
+		isDead = false;
+		gameObject.SetActive(true);
+		Gun gun = GetComponent<Gun>();
+		gun.isFiring = false;
+		gun.alreadyRefilling = false;
+		gun.currentAmmoCount = gun.maxAmmoCount;
+	}
 
     void FixedUpdate()
     {
