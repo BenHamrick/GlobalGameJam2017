@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour {
         float distance = 2f * transform.localScale.x;
 
         RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, direction, distance);
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + direction * distance, Color.green);
             if (!isOnGround) {
                 isOnGround = true;
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + direction * distance, Color.red);
 
         hit = Physics2D.Raycast((Vector2)transform.position + left, direction, distance);
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position + left, (Vector2)transform.position + left + direction * distance, Color.green);
             if (!isOnGround) {
                 if (PerlinShake.instance) {
@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine((Vector2)transform.position + left, (Vector2)transform.position + left + direction * distance, Color.red);
 
         hit = Physics2D.Raycast((Vector2)transform.position - left, direction, distance);
-        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
+        if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position - left, (Vector2)transform.position - left + direction * distance, Color.green);
             if (!isOnGround) {
                 isOnGround = true;
