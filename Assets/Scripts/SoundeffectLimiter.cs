@@ -18,6 +18,7 @@ public class SoundeffectLimiter : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         if (sounds.ContainsKey(id) == false) {
             sounds.Add(id, 0);
+            return;
         }
         if (sounds[id] > skipSounds) {
             sounds[id] = 0;
