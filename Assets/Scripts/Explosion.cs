@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveExplosion : MonoBehaviour 
+public class Explosion : MonoBehaviour 
 {
 	#region Attributes
 	public float secondsBeforeObjectDestroyed = 3f;
