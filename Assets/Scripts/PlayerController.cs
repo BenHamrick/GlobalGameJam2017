@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour {
     public float jumpForce = 1300f;
     public Animator animator;
     public Transform playerModel;
+
+    public Slider healthSlider;
 
 	public GameObject[] deathParticles;
 	public GameObject deathParticle;
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         CheckGound();
         animator.SetBool("OnGround", isOnGround);
+        healthSlider.value = health / maxHealth;
     }
 
 	public void KillPlayer()
@@ -102,8 +106,11 @@ public class PlayerController : MonoBehaviour {
 
         if (team == Team.red) {
             animator.SetFloat("Speed", -(_rigidbody2D.velocity.x / currentMaxVelocity) * .9f);
-            animator.SetFloat("SpeedAbs", Mathf.Abs(_rigidbody2D.velocity.x));
+        } else {
+            animator.SetFloat("Speed", (_rigidbody2D.velocity.x / currentMaxVelocity) * .9f);
         }
+
+        animator.SetFloat("SpeedAbs", Mathf.Abs(_rigidbody2D.velocity.x));
 
         if (lockFalling) {
             _rigidbody2D.velocity = new Vector2(0, 0);

@@ -90,7 +90,7 @@ public class Gun : MonoBehaviour
 
 	IEnumerator FireWave(WaveAmmo wAmmo)
 	{
-		if (!IsOutOfAmmo) 
+		if (!IsOutOfAmmo && GameManager.instance.gameState == GameState.gamePlay) 
 		{
 			isFiring = true;
             wAmmo.SpawnWave(this, team);

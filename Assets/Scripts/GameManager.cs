@@ -22,6 +22,9 @@ public enum GameState
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
+    public AudioClip[] countDown;
+    public AudioSource countDownAudioSource;
+
     public GameState gameState;
     public GameObject playerPrefab;
     public Transform[] positions;
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour {
     int positionIndex = 0;
 
     float startingTime = 0f;
+    int countDownIndex = 0;
 
     public List<MusicTextSync> textSync;
     public List<MusicHueSync> hueSync;
@@ -110,6 +114,11 @@ public class GameManager : MonoBehaviour {
             startText.text = "GO";
         } else {
             startText.text = "" + Mathf.RoundToInt(startingTime);
+        }
+        if (countDownIndex < Mathf.RoundToInt(startingTime)) {
+            countDownAudioSource.clip = countDown[countDownIndex];
+            countDownAudioSource.Play();
+            countDownIndex++;
         }
         if (startingTime < -.5f) {
             gameState = GameState.gamePlay;
