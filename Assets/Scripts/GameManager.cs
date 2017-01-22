@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
     float startingTime = 0f;
     int countDownIndex = 0;
 
+	public GameObject[] deathLazers;
     public List<MusicTextSync> textSync;
     public List<MusicHueSync> hueSync;
 
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour {
             if (players[0].inputcontroller.playerActions.Start.WasPressed && startingTime > 1f) {
                 gameState = GameState.startingGame;
                 startingTime = 5f;
-                countDownIndex = 5;
+                countDownIndex = 6;
                 startGameObject.gameObject.SetActive(true);
             }
         }
@@ -111,13 +112,13 @@ public class GameManager : MonoBehaviour {
     {
         pressStart.SetActive(false);
         startingTime -= Time.deltaTime;
-        if (startingTime < .1f) {
+        if (startingTime < .5f) {
             startText.text = "GO";
         } else {
             startText.text = "" + Mathf.RoundToInt(startingTime);
         }
-        if (countDownIndex > Mathf.RoundToInt(startingTime)) {
-            countDownAudioSource.clip = countDown[countDownIndex];
+        if (countDownIndex > Mathf.RoundToInt(startingTime) && countDownIndex > 0) {
+            countDownAudioSource.clip = countDown[countDownIndex - 1];
             countDownAudioSource.Play();
             countDownIndex--;
         }
@@ -137,15 +138,28 @@ public class GameManager : MonoBehaviour {
     {
         startingTime += Time.deltaTime;
         if (slider.value == 1) {
-            winningText.text = "Red Team Loses";
+            winningText.text = "Orange Team Loses";
+			deathLazers[0].SetActive(true);
+			killTeam(Team.red);
         } else {
+			deathLazers[1].SetActive(false);
             winningText.text = "Blue Team Loses";
+			killTeam(Team.blue);
         }
         if (startingTime > 5f) {
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
     }
+
+	void killTeam(Team team)
+	{
+		for(int i = 0; i < players.Count; i++)
+		{
+			if(players[i].team == team)
+				players[i].KillPlayer();
+		}
+	}
 
     void StartWasPressed(InputDevice device)
     {

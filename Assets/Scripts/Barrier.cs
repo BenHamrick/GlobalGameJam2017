@@ -14,7 +14,7 @@ public class Barrier : MonoBehaviour
 		GameObject thunder = GameObject.Instantiate(thunda, player.transform.position + (Vector3.down * 2f), thunda.transform.rotation);
 		thunder.AddComponent<Explosion>();
 
-		yield return new WaitForSeconds(.1F);
+		yield return new WaitForSeconds(0F);
 		player.KillPlayer();
 	}
 	#endregion
