@@ -192,16 +192,12 @@ public class GameManager : MonoBehaviour {
 
 			if (slider.value == 1) {
 				winningText.text = "Orange Team Loses";
-				if(deathLazers[0].activeSelf){
-					deathLazers[0].SetActive(true);
-					killTeam(Team.red);
-				}
+				deathLazers[0].SetActive(true);
+				killTeam(Team.red);
 			} else {
 				winningText.text = "Blue Team Loses";
-				if(deathLazers[1].activeSelf){
-					deathLazers[1].SetActive(true);
-					killTeam(Team.blue);
-				}
+				deathLazers[1].SetActive(true);
+				killTeam(Team.blue);
 			}
         }
     }
