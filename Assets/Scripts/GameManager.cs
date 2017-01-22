@@ -137,15 +137,6 @@ public class GameManager : MonoBehaviour {
     void endOfGame()
     {
         startingTime += Time.deltaTime;
-        if (slider.value == 1) {
-            winningText.text = "Orange Team Loses";
-			deathLazers[0].SetActive(true);
-			killTeam(Team.red);
-        } else {
-			deathLazers[1].SetActive(false);
-            winningText.text = "Blue Team Loses";
-			killTeam(Team.blue);
-        }
         if (startingTime > 5f) {
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
@@ -198,6 +189,16 @@ public class GameManager : MonoBehaviour {
             gameState = GameState.endOfGame;
             startingTime = 0f;
             winning.SetActive(true);
+
+			if (slider.value == 1) {
+				winningText.text = "Orange Team Loses";
+				deathLazers[0].SetActive(true);
+				killTeam(Team.red);
+			} else {
+				winningText.text = "Blue Team Loses";
+				deathLazers[1].SetActive(true);
+				killTeam(Team.blue);
+			}
         }
     }
 
@@ -205,7 +206,7 @@ public class GameManager : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(5f);
 		bool positionFound = false;
-		while(!positionFound)
+		while(!positionFound && gameState != GameState.endOfGame)
 		{
 			int positionIndex = Random.Range(0, positions.Length - 1);
 			if(player.team == Team.blue && positionIndex % 2 != 0){
