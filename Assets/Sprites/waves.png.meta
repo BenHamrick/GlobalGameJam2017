@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1ccb4d65783cde24ab00c50907009e0b
-timeCreated: 1485043205
+timeCreated: 1485044270
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -92,12 +92,12 @@ TextureImporter:
       name: waves_0
       rect:
         serializedVersion: 2
-        x: 67
-        y: 322
-        width: 493
-        height: 581
+        x: 1380
+        y: 815
+        width: 281
+        height: 239
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -105,12 +105,12 @@ TextureImporter:
       name: waves_1
       rect:
         serializedVersion: 2
-        x: 829
-        y: 336
-        width: 660
-        height: 561
+        x: 1452
+        y: 507
+        width: 148
+        height: 187
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -118,12 +118,12 @@ TextureImporter:
       name: waves_2
       rect:
         serializedVersion: 2
-        x: 1906
-        y: 307
-        width: 493
-        height: 625
+        x: 1411
+        y: 59
+        width: 220
+        height: 257
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
