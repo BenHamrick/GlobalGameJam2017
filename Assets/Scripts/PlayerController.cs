@@ -27,13 +27,13 @@ public class PlayerController : MonoBehaviour {
     public GameObject onPlatform;
 	public bool isDead;
     public bool isOnGround = true;
-	public bool isVibrating = false;
     float ghostJumpTimer = 0f;
     float currentMaxVelocity = 0f;
 
     OneWayController _oneWayController;
     Rigidbody2D _rigidbody2D;
     public InputController inputcontroller;
+    public ControllerVibrationManager vibrationManager;
 
     bool lockFalling;
 
@@ -59,13 +59,6 @@ public class PlayerController : MonoBehaviour {
         gunPack.color = color;
         health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
-
-		if(team == Team.blue){
-			deathParticle = deathParticles[0];
-		}
-		else{
-			deathParticle = deathParticles[1];
-		}
     }
 
 	// Use this for initialization
@@ -75,6 +68,15 @@ public class PlayerController : MonoBehaviour {
         if (team == Team.red) {
             playerModel.localScale = new Vector3(-playerModel.localScale.x, playerModel.localScale.y, playerModel.localScale.z);
         }
+
+        if (team == Team.blue) {
+            deathParticle = deathParticles[0];
+        }
+        else {
+            deathParticle = deathParticles[1];
+        }
+
+        vibrationManager =  GameManager.instance.gameObject.GetComponent<ControllerVibrationManager>();
     }
 
 	// Update is called once per frame
@@ -87,7 +89,7 @@ public class PlayerController : MonoBehaviour {
 	public void damagePlayer(float damage)
 	{
 		Health -= damage;
-		startControllerVibration(1f, .25f);
+		vibrationManager.StartControllerVibration(this,1f, .25f);
 	}
 
 	public void KillPlayer(bool regularDeath = true)
@@ -103,10 +105,10 @@ public class PlayerController : MonoBehaviour {
 			dParticle.AddComponent<Explosion>();
 
 			if(regularDeath){
-				startControllerVibration(1f, .5f);
+                vibrationManager.StartControllerVibration(this, 1f, .5f);
 			}
 			else{
-				startControllerVibration(1f, 1f);
+                vibrationManager.StartControllerVibration(this, 1f, 2.5f);
 			}
 
 			gameObject.SetActive(false);
@@ -225,20 +227,4 @@ public class PlayerController : MonoBehaviour {
     {
         lockFalling = isFier;
     }
-
-	public void startControllerVibration(float intenisty, float duration)
-	{
-		if(!isVibrating)
-			StartCoroutine(vibrateController(intenisty, duration));
-	}
-
-	IEnumerator vibrateController(float intensity, float duration)
-	{
-		isVibrating = true;
-		PlayerActions playerActions = inputcontroller.playerActions;
-		playerActions.Device.Vibrate(intensity);
-		yield return new WaitForSeconds(duration);
-		playerActions.Device.StopVibration();
-		isVibrating = false;
-	}
 }
