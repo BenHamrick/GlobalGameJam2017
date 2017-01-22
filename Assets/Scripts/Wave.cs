@@ -53,6 +53,7 @@ public class Wave : MonoBehaviour
 	{
 		this.team = team;
 		direction = (team == Team.blue) ? Vector3.right : Vector3.left;
+        transform.localScale = new Vector3((team == Team.blue) ? -transform.localScale.x : transform.localScale.x, transform.localScale.y, transform.localScale.z);
 	}
 	#endregion
 

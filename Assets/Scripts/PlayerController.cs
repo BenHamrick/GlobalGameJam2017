@@ -74,7 +74,10 @@ public class PlayerController : MonoBehaviour {
 
 	public void KillPlayer()
 	{
-		isDead = true;
+        if (PerlinShake.instance) {
+            PerlinShake.instance.PlayShake(0.4f, 10.0f, 0.15f);
+        }
+        isDead = true;
 		GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
 		GameObject dParticle = GameObject.Instantiate(deathParticle, transform.position, deathParticle.transform.rotation);
 		dParticle.AddComponent<Explosion>();
@@ -120,9 +123,6 @@ public class PlayerController : MonoBehaviour {
         if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + direction * distance, Color.green);
             if (!isOnGround) {
-                if (PerlinShake.instance) {
-                    PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
-                }
                 isOnGround = true;
                 onPlatform = hit.collider.gameObject;
                 ghostJumpTimer = 0f;
@@ -150,9 +150,6 @@ public class PlayerController : MonoBehaviour {
         if (hit.collider != null && (hit.collider.gameObject.tag == "Floor" || hit.collider.gameObject.tag == "OneWayPlatform")) {
             Debug.DrawLine((Vector2)transform.position - left, (Vector2)transform.position - left + direction * distance, Color.green);
             if (!isOnGround) {
-                if (PerlinShake.instance) {
-                    PerlinShake.instance.PlayShake(0.2f, 10.0f, 0.1f);
-                }
                 isOnGround = true;
                 onPlatform = hit.collider.gameObject;
                 ghostJumpTimer = 0f;
