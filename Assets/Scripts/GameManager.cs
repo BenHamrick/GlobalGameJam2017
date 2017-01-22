@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour {
             if (players[0].inputcontroller.playerActions.Start.WasPressed && startingTime > 1f) {
                 gameState = GameState.startingGame;
                 startingTime = 5f;
-                countDownIndex = 5;
+                countDownIndex = 6;
                 startGameObject.gameObject.SetActive(true);
             }
         }
@@ -111,13 +111,13 @@ public class GameManager : MonoBehaviour {
     {
         pressStart.SetActive(false);
         startingTime -= Time.deltaTime;
-        if (startingTime < .1f) {
+        if (startingTime < .5f) {
             startText.text = "GO";
         } else {
             startText.text = "" + Mathf.RoundToInt(startingTime);
         }
-        if (countDownIndex > Mathf.RoundToInt(startingTime)) {
-            countDownAudioSource.clip = countDown[countDownIndex];
+        if (countDownIndex > Mathf.RoundToInt(startingTime) && countDownIndex > 0) {
+            countDownAudioSource.clip = countDown[countDownIndex - 1];
             countDownAudioSource.Play();
             countDownIndex--;
         }
