@@ -115,10 +115,10 @@ public class GameManager : MonoBehaviour {
         } else {
             startText.text = "" + Mathf.RoundToInt(startingTime);
         }
-        if (countDownIndex < Mathf.RoundToInt(startingTime)) {
+        if (countDownIndex > Mathf.RoundToInt(startingTime)) {
             countDownAudioSource.clip = countDown[countDownIndex];
             countDownAudioSource.Play();
-            countDownIndex++;
+            countDownIndex--;
         }
         if (startingTime < -.5f) {
             gameState = GameState.gamePlay;
