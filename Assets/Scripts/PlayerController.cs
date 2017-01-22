@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 
     public SpriteRenderer helmet;
     public SpriteRenderer gunPack;
+    public Image gunBar;
 
     public Color[] playerColors;
 
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour {
     {
         helmet.color = playerColors[colorIndex];
         gunPack.color = playerColors[colorIndex];
+        gunBar.color = playerColors[colorIndex];
         colorIndex++;
         health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
