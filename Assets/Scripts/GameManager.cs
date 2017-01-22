@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
 
     void Awake()
     {
+        beatDetection = KeepAlive.instance.GetComponent<BeatDetection>();
         textSync = new List<MusicTextSync>();
         hueSync = new List<MusicHueSync>();
         pressStart.SetActive(true);

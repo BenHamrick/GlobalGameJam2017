@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KeepAlive : MonoBehaviour {
 
-    static KeepAlive instance = null;
+    public static KeepAlive instance = null;
 
     void Awake()
     {
