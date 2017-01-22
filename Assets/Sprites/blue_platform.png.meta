@@ -1,16 +1,17 @@
 fileFormatVersion: 2
 guid: 3f3c8984467a5ef43824447e7c75e99f
-timeCreated: 1485064513
+timeCreated: 1485064829
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: blue_platform_0
-    21300002: blue_platform_1
-    21300004: blue_platform_2
+    21300002: Red win bar right
+    21300004: etc black thingy
     21300006: blue_platform_3
-    21300008: blue_platform_4
+    21300008: blue win bar left
     21300010: blue_platform_5
     21300012: blue_platform_6
+    21300014: blue_platform_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -90,20 +91,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: blue_platform_1
+      name: Red win bar right
       rect:
         serializedVersion: 2
-        x: 622
-        y: 924
-        width: 1156
-        height: 188
-      alignment: 9
-      pivot: {x: 0.49481276, y: 0.51594865}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        x: 1051
+        y: 950
+        width: 726
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 546, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: blue_platform_2
+      name: etc black thingy
       rect:
         serializedVersion: 2
         x: 2032
@@ -111,7 +112,7 @@ TextureImporter:
         width: 226
         height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -129,7 +130,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: blue_platform_4
+      name: blue win bar left
+      rect:
+        serializedVersion: 2
+        x: 1482
+        y: 414
+        width: 435
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: blue_platform_5
       rect:
         serializedVersion: 2
         x: 2235
@@ -142,7 +156,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: blue_platform_5
+      name: blue_platform_6
       rect:
         serializedVersion: 2
         x: 936
@@ -155,7 +169,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: blue_platform_6
+      name: blue_platform_7
       rect:
         serializedVersion: 2
         x: 2235
