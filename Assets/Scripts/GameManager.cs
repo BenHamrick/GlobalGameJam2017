@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour {
 
     void waitingOnPlayers ()
     {
-        if (players.Count > 0 && players[0].inputcontroller.playerActions.Device != null) {
+        if (players.Count > 0) {
             startingTime += Time.deltaTime;
             if (players[0].inputcontroller.playerActions.Start.WasPressed && startingTime > 1f) {
                 gameState = GameState.startingGame;
@@ -107,6 +107,12 @@ public class GameManager : MonoBehaviour {
             if (InputManager.Devices[i].CommandWasPressed || InputManager.Devices[i].RightStickButton.WasPressed) {
                 StartWasPressed(InputManager.Devices[i]);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            KeyboardZWasPressed();
+        }
+        if (Input.GetKeyDown(KeyCode.U)) {
+            KeyboardUWasPressed();
         }
     }
 
@@ -154,6 +160,49 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+    void KeyboardUWasPressed()
+    {
+        for (int i = 0; i < players.Count; i++) {
+            if (players[i].id == 3) {
+                return;
+            }
+        }
+        GameObject player = (GameObject)Instantiate(playerPrefab, positions[positionIndex].position, Quaternion.identity);
+        positionIndex++;
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        playerController.id = 3;
+        if (positionIndex % 2 == 0) {
+            playerController.team = Team.blue;
+        }
+        else {
+            playerController.team = Team.red;
+        }
+
+        playerController.inputcontroller.playerActions = PlayerActions.CreateWithPlayer2KeyboardBindings();
+        players.Add(playerController);
+    }
+
+    void KeyboardZWasPressed()
+    {
+        for (int i = 0; i < players.Count; i++) {
+            if (players[i].id == 2) {
+                return;
+            }
+        }
+        GameObject player = (GameObject)Instantiate(playerPrefab, positions[positionIndex].position, Quaternion.identity);
+        positionIndex++;
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        playerController.id = 2;
+        if (positionIndex % 2 == 0) {
+            playerController.team = Team.blue;
+        } else {
+            playerController.team = Team.red;
+        }
+        
+        playerController.inputcontroller.playerActions = PlayerActions.CreateWithPlayer1KeyboardBindings();
+        players.Add(playerController);
+    }
+
     void StartWasPressed(InputDevice device)
     {
         for (int i = 0; i < players.Count; i++) {
@@ -167,11 +216,12 @@ public class GameManager : MonoBehaviour {
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (positionIndex % 2 == 0) {
             playerController.team = Team.blue;
-        } else {
+        }
+        else {
             playerController.team = Team.red;
         }
-        
-        playerController.inputcontroller.playerActions = PlayerActions.CreateWithDebugBindings();
+
+        playerController.inputcontroller.playerActions = PlayerActions.CreateControllerBindings();
         playerController.inputcontroller.playerActions.Device = device;
         players.Add(playerController);
     }

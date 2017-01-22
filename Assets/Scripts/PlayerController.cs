@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour {
 
     bool lockFalling;
 
+    public int id;
+
 	public float Health
 	{
 		get{
