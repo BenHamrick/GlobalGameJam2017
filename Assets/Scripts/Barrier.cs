@@ -11,7 +11,7 @@ public class Barrier : MonoBehaviour
 	#region The Thunda
 	IEnumerator BringDownTheThunda(PlayerController player)
 	{
-		GameObject thunder = GameObject.Instantiate(thunda, player.transform.position + (Vector3.down * 2f), thunda.transform.rotation);
+		GameObject thunder = GameObject.Instantiate(thunda, player.transform.position + (Vector3.down * 1.3f), thunda.transform.rotation);
 		thunder.AddComponent<Explosion>();
 
 		yield return new WaitForSeconds(0F);
