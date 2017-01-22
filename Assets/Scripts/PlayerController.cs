@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject onPlatform;
 	public bool isDead;
     public bool isOnGround = true;
+	public bool isVibrating = false;
     float ghostJumpTimer = 0f;
     float currentMaxVelocity = 0f;
 
@@ -76,16 +77,33 @@ public class PlayerController : MonoBehaviour {
         healthSlider.value = health / maxHealth;
     }
 
-	public void KillPlayer()
+	public void damagePlayer(float damage)
 	{
-        if (PerlinShake.instance) {
-            PerlinShake.instance.PlayShake(0.4f, 10.0f, 0.15f);
-        }
-        isDead = true;
-		GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
-		GameObject dParticle = GameObject.Instantiate(deathParticle, transform.position, deathParticle.transform.rotation);
-		dParticle.AddComponent<Explosion>();
-		gameObject.SetActive(false);
+		Health -= damage;
+		startControllerVibration(1f, .25f);
+	}
+
+	public void KillPlayer(bool regularDeath = true)
+	{
+		if(!isDead)
+		{
+	        if (PerlinShake.instance) {
+	            PerlinShake.instance.PlayShake(0.4f, 10.0f, 0.15f);
+	        }
+	        isDead = true;
+			GameManager.instance.StartCoroutine(GameManager.instance.Respawn(this));
+			GameObject dParticle = GameObject.Instantiate(deathParticle, transform.position, deathParticle.transform.rotation);
+			dParticle.AddComponent<Explosion>();
+
+			if(regularDeath){
+				startControllerVibration(1f, .5f);
+			}
+			else{
+				startControllerVibration(1f, 1f);
+			}
+
+			gameObject.SetActive(false);
+		}
 	}
 
 	public void RevivePlayer()
@@ -200,4 +218,20 @@ public class PlayerController : MonoBehaviour {
     {
         lockFalling = isFier;
     }
+
+	public void startControllerVibration(float intenisty, float duration)
+	{
+		if(!isVibrating)
+			StartCoroutine(vibrateController(intenisty, duration));
+	}
+
+	IEnumerator vibrateController(float intensity, float duration)
+	{
+		isVibrating = true;
+		PlayerActions playerActions = inputcontroller.playerActions;
+		playerActions.Device.Vibrate(intensity);
+		yield return new WaitForSeconds(duration);
+		playerActions.Device.StopVibration();
+		isVibrating = false;
+	}
 }
