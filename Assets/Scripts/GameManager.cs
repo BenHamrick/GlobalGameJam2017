@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
     float startingTime = 0f;
     int countDownIndex = 0;
 
+	public GameObject[] deathLazers;
     public List<MusicTextSync> textSync;
     public List<MusicHueSync> hueSync;
 
@@ -138,14 +139,27 @@ public class GameManager : MonoBehaviour {
         startingTime += Time.deltaTime;
         if (slider.value == 1) {
             winningText.text = "Red Team Loses";
+			deathLazers[0].SetActive(true);
+			killTeam(Team.red);
         } else {
+			deathLazers[1].SetActive(false);
             winningText.text = "Blue Team Loses";
+			killTeam(Team.blue);
         }
         if (startingTime > 5f) {
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
     }
+
+	void killTeam(Team team)
+	{
+		for(int i = 0; i < players.Count; i++)
+		{
+			if(players[i].team == team)
+				players[i].KillPlayer();
+		}
+	}
 
     void StartWasPressed(InputDevice device)
     {
