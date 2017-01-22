@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-    static int colorIndex;
-
     public Team team;
 
     public SpriteRenderer helmet;
@@ -62,23 +60,12 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-        helmet.color = playerColors[colorIndex];
-        gunPack.color = playerColors[colorIndex];
-        gunBar.color = playerColors[colorIndex];
-        colorIndex++;
+        helmet.color = playerColors[GameManager.instance.colorIndex];
+        gunPack.color = playerColors[GameManager.instance.colorIndex];
+        gunBar.color = playerColors[GameManager.instance.colorIndex];
+        GameManager.instance.colorIndex++;
         health = maxHealth;
         inputcontroller  = GetComponent<InputController>();
-    }
-
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        colorIndex = 0;
-    }
-
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
     // Use this for initialization
