@@ -25,12 +25,12 @@ public class Colorizer : MonoBehaviour {
 		var rend = effect.GetComponentsInChildren<Renderer>();
 		foreach (var r in rend) {
 
-			#if UNITY_EDITOR 
+			//#if UNITY_EDITOR 
 			var mat = r.sharedMaterial;
-			#else
-			if(UseInstanceWhenNotEditorMode) var mat = r.material;
-			else mat = r.sharedMaterial;
-			#endif
+			//#else
+			//if(UseInstanceWhenNotEditorMode) var mat = r.material;
+			//else mat = r.sharedMaterial;
+			//#endif
 		
 			if(mat==null || !mat.HasProperty("_TintColor")) continue;
 			var oldColor = mat.GetColor("_TintColor");
