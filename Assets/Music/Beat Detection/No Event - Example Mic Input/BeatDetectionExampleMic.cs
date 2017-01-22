@@ -96,22 +96,22 @@ public class BeatDetectionExampleMic : MonoBehaviour {
 	
 	//Get mic capabilities
 	public void GetMicCaps () {
-		Microphone.GetDeviceCaps(selectedDevice, out minFreq, out maxFreq);//Gets the frequency of the device
+		//Microphone.GetDeviceCaps(selectedDevice, out minFreq, out maxFreq);//Gets the frequency of the device
 		if ((minFreq + maxFreq) == 0)
 			maxFreq = 44100;
 	}
 	
 	//True start mic
 	public void StartMicrophone () {
-		GetComponent<AudioSource>().clip = Microphone.Start(selectedDevice, true, 10, maxFreq); //Starts recording
-		while (!(Microphone.GetPosition(selectedDevice) > 0)){} // Wait until the recording has started
-		GetComponent<AudioSource>().Play(); // Play the audio source!
+		//GetComponent<AudioSource>().clip = Microphone.Start(selectedDevice, true, 10, maxFreq); //Starts recording
+		//while (!(Microphone.GetPosition(selectedDevice) > 0)){} // Wait until the recording has started
+		//GetComponent<AudioSource>().Play(); // Play the audio source!
 	}
 	
 	//True stop mic
 	public void StopMicrophone () {
 		GetComponent<AudioSource>().Stop();//Stops the audio
-		Microphone.End(selectedDevice);//Stops the recording of the device	
+		//Microphone.End(selectedDevice);//Stops the recording of the device	
 	}
 	
 	/********************************************
@@ -167,7 +167,7 @@ public class BeatDetectionExampleMic : MonoBehaviour {
 		
 		//Set up mic
 		started = false;
-		selectedDevice = Microphone.devices[0].ToString();
+		//selectedDevice = Microphone.devices[0].ToString();
 		micSelected = true;
 		GetMicCaps();
 		setUptMic();
