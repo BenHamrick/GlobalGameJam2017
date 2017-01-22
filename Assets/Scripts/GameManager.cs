@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour {
             if (players[0].inputcontroller.playerActions.Start.WasPressed && startingTime > 1f) {
                 gameState = GameState.startingGame;
                 startingTime = 5f;
+                countDownIndex = 5;
                 startGameObject.gameObject.SetActive(true);
             }
         }
