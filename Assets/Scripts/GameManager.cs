@@ -54,8 +54,7 @@ public class GameManager : MonoBehaviour {
         pressStart.SetActive(true);
         instance = this;
         score = winningScore / 2f;
-        players = new List<PlayerController>();
-        beatDetection = GetComponent<BeatDetection>();  
+        players = new List<PlayerController>(); 
 
         beatDetection.CallBackFunction = MyCallbackEventHandler;
     }
