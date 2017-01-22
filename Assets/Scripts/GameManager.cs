@@ -47,11 +47,8 @@ public class GameManager : MonoBehaviour {
     public List<MusicTextSync> textSync;
     public List<MusicHueSync> hueSync;
 
-    public int colorIndex;
-
     void Awake()
     {
-        colorIndex = 0;
         textSync = new List<MusicTextSync>();
         hueSync = new List<MusicHueSync>();
         pressStart.SetActive(true);
@@ -220,6 +217,10 @@ public class GameManager : MonoBehaviour {
 				positionFound = true;
 				player.gameObject.transform.position = positions[positionIndex].position;
 			}
+		}
+
+		if(gameState == GameState.endOfGame){
+			return null;
 		}
 
 		player.RevivePlayer();
