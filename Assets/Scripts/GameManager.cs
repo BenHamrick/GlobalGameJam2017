@@ -22,6 +22,8 @@ public enum GameState
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
+    public int colorIndex;
+
     public AudioClip[] countDown;
     public AudioSource countDownAudioSource;
 
@@ -269,10 +271,8 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-		if(gameState == GameState.endOfGame){
-			return null;
-		}
-
-		player.RevivePlayer();
+		if(gameState != GameState.endOfGame){
+            player.RevivePlayer();
+        }
 	}
 }
