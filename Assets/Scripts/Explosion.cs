@@ -11,6 +11,10 @@ public class Explosion : MonoBehaviour
 	#region Destroy Explosion
 	void OnEnable()
 	{
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && audioSource.enabled) {
+            audioSource.Play();
+        }
 		StartCoroutine(DestroyTimer());
 	}
 

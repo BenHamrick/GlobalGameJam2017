@@ -22,10 +22,10 @@ public class SoundeffectLimiter : MonoBehaviour {
         }
         if (sounds[id] > skipSounds) {
             sounds[id] = 0;
+            audioSource.enabled = true;
         } else {
             sounds[id]++;
             audioSource.enabled = false;
-            enabled = false;
         }
 	}
 }
