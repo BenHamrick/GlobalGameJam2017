@@ -21,7 +21,8 @@ public class Gun : MonoBehaviour
 		public void SpawnWave(Gun gun, Team team)
 		{
 			Vector3 positionAdjuster = (team == Team.blue) ? gun.waveSpawnPostionAdjuster : gun.waveSpawnPostionAdjuster * -1;
-			GameObject w = GameObject.Instantiate(wave, gun.gameObject.transform.position + gun.gameObject.transform.forward + positionAdjuster , Quaternion.identity);
+            GameObject w = NewSpawnPool.instance.getGameObject(wave);
+			w.transform.position = gun.gameObject.transform.position + gun.gameObject.transform.forward + positionAdjuster;
 			w.GetComponent<Wave>().SetTeam(team);
 		}
 	}

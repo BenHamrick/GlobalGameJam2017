@@ -92,13 +92,15 @@ public class ControllerVibrationManager : MonoBehaviour
         if (!vController.IsVibrating) {
             vController.IsVibrating = true;
             PlayerActions playerActions = vController.Player.inputcontroller.playerActions;
-            playerActions.Device.Vibrate(vController.Intensity);
-            yield return new WaitForSeconds(vController.Duration);
-            playerActions.Device.StopVibration();
-            vController.IsVibrating = false;
+            if (playerActions.Device != null) {
+                playerActions.Device.Vibrate(vController.Intensity);
+                yield return new WaitForSeconds(vController.Duration);
+                playerActions.Device.StopVibration();
+                vController.IsVibrating = false;
 
-            vibratingControllers.Remove(vController);
-            vibratingControllers.TrimExcess();
+                vibratingControllers.Remove(vController);
+                vibratingControllers.TrimExcess();
+            }
         }
     }
 }

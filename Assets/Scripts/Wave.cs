@@ -53,7 +53,7 @@ public class Wave : MonoBehaviour
 	{
 		this.team = team;
 		direction = (team == Team.blue) ? Vector3.right : Vector3.left;
-        transform.localScale = new Vector3((team == Team.blue) ? -transform.localScale.x : transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        transform.localScale = new Vector3((team == Team.blue) ? Mathf.Abs(transform.localScale.x) *-1 : Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 	}
 	#endregion
 
@@ -68,12 +68,13 @@ public class Wave : MonoBehaviour
 		if(otherWave.team != team && otherWave.wType == wType)
 		{
 			Vector3 midPoint = transform.position + ((otherWave.transform.position - transform.position) * .5f);
-			GameObject exEffect = GameObject.Instantiate(explosionEffect, midPoint,Quaternion.identity);
-			exEffect.AddComponent<Explosion>();
-			Destroy(exEffect.GetComponent<DemoReactivator>());
+            GameObject exEffect = NewSpawnPool.instance.getGameObject(explosionEffect);
+            exEffect.transform.position = midPoint;
+			//exEffect.AddComponent<Explosion>();
+			//Destroy(exEffect.GetComponent<DemoReactivator>());
 
 			Debug.Log("Collided with wave: ");
-			Destroy(gameObject);
+            gameObject.SetActive(false);
 		}
 	}
 
@@ -87,22 +88,23 @@ public class Wave : MonoBehaviour
 		{
 			player.damagePlayer(damage);
 			Debug.Log("Collided with player: ");
-			Destroy(gameObject);
-		}
+            gameObject.SetActive(false);
+        }
 	}
 
 	void WallCollision(Collider2D collider)
 	{
 		Debug.Log("Collided with wall: ");
-		GameObject scEffect = GameObject.Instantiate(scoreEffect, transform.position,Quaternion.identity);
+        GameObject scEffect = NewSpawnPool.instance.getGameObject(scoreEffect);
+        scEffect.transform.position = transform.position;
 
-		scEffect.AddComponent<Explosion>();
-		Destroy(scEffect.GetComponent<DemoReactivator>());
+  //      scEffect.AddComponent<Explosion>();
+		//Destroy(scEffect.GetComponent<DemoReactivator>());
 
 		WallController wController = collider.gameObject.GetComponent<WallController>();
 		wController.Score();
-		Destroy(gameObject);
-	}
+        gameObject.SetActive(false);
+    }
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{

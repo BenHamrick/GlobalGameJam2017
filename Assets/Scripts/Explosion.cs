@@ -9,7 +9,7 @@ public class Explosion : MonoBehaviour
 	#endregion
 
 	#region Destroy Explosion
-	void Start()
+	void OnEnable()
 	{
 		StartCoroutine(DestroyTimer());
 	}
@@ -17,7 +17,8 @@ public class Explosion : MonoBehaviour
 	IEnumerator DestroyTimer()
 	{
 		yield return new WaitForSeconds(secondsBeforeObjectDestroyed);
-		Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
 	}
 	#endregion
 }
